@@ -2,32 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Http\Request;
 
 use Session;
-use Stripe;
-use Stripe\Stripe as StripeStripe;
+
 
 class StripeController extends Controller
 {
-     public function stripe()
+    public function __construct()
     {
-        return view('stripe');
+        $this->middleware('auth');
+    }
+
+    public function stripe()
+    {
+        $user = auth()->user();
+        return view('stripe', [
+            'intent' => $user->createSetupIntent(),
+        ]);
     }
 
     public function stripePost(Request $request)
     {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        Stripe\Charge::create([
-            'amount' => 100*100,
-            'currency'=>"usd",
-            'source'=> $request->stripeToken,
-            'description' =>'Test payment Sondos Said'
-        ]);
+        $amount = $request->amount;
+        $paymentMathod = $request->payment_method;
 
-        Session::flash('success','Payment has been successfully');
-        return back();
+        $user = auth()->user();
+        $user->createOrGetStripeCustomer();
+
+        $paymentMathod = $user->addPaymentMethod($paymentMathod);
+
+        $user->charge($amount, $paymentMathod->id);
+
+        Session::flash('success', 'Payment has been successfully');
+        return to_route('stripe');
     }
-    
 }
