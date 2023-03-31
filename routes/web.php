@@ -25,13 +25,19 @@ Route::get('/', function () {
 //         return view('index');
 //     });
 // });
-Auth::routes();
+
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Auth::routes(['register' => false]);
+
+// Route::get('/register', function() {
+//     return redirect('/login');
+// });
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('stripe', [StripeController::class , 'stripe']);
+Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
