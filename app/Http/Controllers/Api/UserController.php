@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUsersPostRequest;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
@@ -21,6 +22,7 @@ class UserController extends Controller
         $avater = request()->avatar;
         $mobile = request()->mobile;
         $national_id = request()->national_id;
+        $is_inquired = request()->is_inquired;
 
         $user = User::create([
             'name' => $name,
@@ -30,7 +32,12 @@ class UserController extends Controller
             'birth_day' => $dateOfBirth,
             'avatar' => $avater,
             'mobile' => $mobile,
-            'national_id' => $national_id
+            'national_id' => $national_id,
+            'role' => 'Client'
+        ]);
+        Client::create([
+            'user_id' => $user->id,
+            'is_inquired' => $is_inquired
         ]);
         event(new Registered($user));
         return 'done';
