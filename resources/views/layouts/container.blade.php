@@ -38,9 +38,38 @@
             <!-- <h1 class="m-0">Dashboard v2</h1> -->
           </div><!-- /.col -->
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v2</li>
+          <ol class="breadcrumb float-sm-right d-flex align-items-baseline">
+              <li><a href="/">Home</a></li>
+              <li class="mx-2">/</li>
+              <li>
+                <ul class="navbar-nav ms-auto ">
+                    <!-- Authentication Links -->
+                    @guest
+                    @if (Route::has('login'))
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                      </li>
+                    @endif
+                    @else
+                    <li class="nav-item dropdown">
+                      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                          {{ Auth::user()->name }}
+                      </a>
+
+                      <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+                                  {{ __('Logout') }}
+                          </a>
+
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                              @csrf
+                          </form>
+                      </div>
+                        </li>
+                        @endguest
+                </ul>
+              </li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -59,7 +88,7 @@
 
 </div>
 <!-- ./wrapper -->
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
