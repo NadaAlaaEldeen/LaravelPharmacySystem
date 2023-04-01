@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Cashier\Billable;
+use Spatie\Permission\Traits\HasRoles;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, Billable;
+    use HasApiTokens, HasFactory, Notifiable, Billable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -23,12 +25,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'gender',
+        'avatar',
         'role',
         'national_id',
+        'gender',
         'birth_day',
         'mobile',
-        'avatar',
+        'email_verified_at'
     ];
 
     /**
