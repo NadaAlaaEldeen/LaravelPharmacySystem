@@ -23,6 +23,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'role',
+        'national_id',
+        'birth_day',
+        'mobile',
+        'avatar',
     ];
 
     /**
@@ -43,4 +49,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function address()
+    {
+        return $this->belongsToMany(Address::class);
+    }
 }
