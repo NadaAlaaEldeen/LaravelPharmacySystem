@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctors', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('is_ban')->default(false);
-            $table->date('created_at')->format('d/m/Y');
+        Schema::table('users', function (Blueprint $table) {
+            $table->timestamp('email_verified_at')->nullable(); 
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctors');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

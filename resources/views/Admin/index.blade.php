@@ -4,6 +4,7 @@
 
 <section class="container-fluid">
     <!-- content of page -->
+    <h1>Admin<h1>
 </section>
 
 
