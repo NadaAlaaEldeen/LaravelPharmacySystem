@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['Admin', 'Owner', 'Doctor', 'Client']);
-            $table->timestamp('email_verified_at')->nullable();
             $table->bigInteger('national_id')->nullable();
             $table->string('gender')->nullable();
             $table->string('birth_day')->nullable();

@@ -16,15 +16,32 @@ use App\Http\Controllers\StripeController;
 */
 
 Route::get('/', function () {
-    return view('index');
+        return view('index');
+    })->middleware(['auth']);
+
+Route::group(['middleware' =>['auth','role:admin']],function(){
+    Route::get('/admin', function () { 
+        return view('Admin/index');
+    })->name('admins.index');
 });
 
+Route::group(['middleware' =>['auth','role:doctor']],function(){
+    Route::get('/doctor', function () { 
+        return view('Doctor/index');
+    })->name('doctors.index');
+});
 
-// Route::group(['middleware' => ['auth']], function(){
-//     Route::get('/', function () {
-//         return view('index');
-//     });
-// });
+Route::group(['middleware' =>['auth','role:pharmacy']],function(){
+    Route::get('/pharmacy', function () { 
+        return view('Pharmacy/index');
+    })->name('pharmacies.index');
+});
+
+Route::group(['middleware' =>['auth','role:client']],function(){
+    Route::get('/client', function () { 
+        return view('client');
+    })->name('clients.index');
+});
 
 // Auth::routes();
 
