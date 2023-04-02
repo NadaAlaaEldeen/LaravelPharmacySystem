@@ -14,7 +14,6 @@ class UserController extends Controller
 
         if ($request->ajax()) {
             $data = User::select('id', 'name', 'email')->get();
-            // dd($data);
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="javascript:void(0)" class="btn btn-primary btn-sm">View</a>';
