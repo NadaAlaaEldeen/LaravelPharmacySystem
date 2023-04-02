@@ -13,16 +13,16 @@ class AddressController extends Controller
 {
     public function index()
     {
-        $user = User::find(1);
-        Auth::login($user);
+        // $user = User::find(1);
+        // Auth::login($user);
         $userAddresses = Address::with('area')->where('user_id', Auth::id())->get();
         return AddressResource::collection($userAddresses);
     }
 
     public function create(Request $request)
     {
-        $user = User::find(1);
-        Auth::login($user);
+        // $user = User::find(1);
+        // Auth::login($user);
         if ($request['is_main']) {
             $userAddresses = Address::where('user_id', Auth::id())->get();
             foreach ($userAddresses as $address) {
@@ -49,8 +49,8 @@ class AddressController extends Controller
 
     public function update($id, Request $request)
     {
-        $user = User::find(1);
-        Auth::login($user);
+        // $user = User::find(1);
+        // Auth::login($user);
 
         if ($request['is_main']) {
             $userAddresses = Address::where('user_id', Auth::id())->get();

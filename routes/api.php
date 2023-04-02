@@ -32,8 +32,8 @@ Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name
 Route::get('email/resend/{id}', [VerificationController::class, 'resend'])->name('verification.resend');
 
 
-Route::post('address', [AddressController::class, 'create'])->name('addresses.create');
-Route::get('address', [AddressController::class, 'index'])->name('addresses.index');
-Route::put('address/{id}', [AddressController::class, 'update'])->name('addresses.update');
-Route::delete('address/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+Route::post('address', [AddressController::class, 'create'])->name('addresses.create')->middleware('auth:sanctum');
+Route::get('address', [AddressController::class, 'index'])->name('addresses.index')->middleware('auth:sanctum');
+Route::put('address/{id}', [AddressController::class, 'update'])->name('addresses.update')->middleware('auth:sanctum');
+Route::delete('address/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy')->middleware('auth:sanctum');
 Route::post('/login', [LoginController::class, 'login']);
