@@ -20,14 +20,22 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+      <li class="nav-item">
+          @role('doctor')
+            <a href="{{route('doctors.index')}}" class="nav-link">
+            @else
+            @role('admin')
+            <a href="{{route('admins.index')}}" class="nav-link">
+            @else
+            <a href="#" class="nav-link">
+            @endrole
+            @endrole
             <img src="dist/img/images/pharmacyicon.png" class="nav-icon">
-            <p>
+              <p>
               Pharmacies
-            </p>
-          </a>
-        </li>
+              </p>
+            </a>
+          </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <img src="dist/img/images/doctorsicon.png" class="nav-icon">
