@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <<<<<<< HEAD <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link">
       <img src="dist/img/images/logo1.gif" alt="pharmacy Logo" class="brand-image img-circle elevation-3">
       <span class="brand-text font-weight-light">Pharmacy System</span>
     </a>
@@ -20,11 +20,19 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-          <li class="nav-item">
+        <li class="nav-item">
+          @role('doctor')
+            <a href="{{route('doctors.index')}}" class="nav-link">
+            @else
+            @role('admin')
+            <a href="{{route('admins.index')}}" class="nav-link">
+            @else
             <a href="#" class="nav-link">
-              <img src="dist/img/images/pharmacyicon.png" class="nav-icon">
+            @endrole
+            @endrole
+            <img src="dist/img/images/pharmacyicon.png" class="nav-icon">
               <p>
-                Pharmacies
+              Pharmacies
               </p>
             </a>
           </li>
@@ -38,7 +46,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('users.index') }}" class="nav-link">
+            <a href="#" class="nav-link">
               <img src="dist/img/images/usericon.png" class="nav-icon">
               <p>
                 Users

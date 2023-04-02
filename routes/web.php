@@ -59,5 +59,3 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
-
-Route::get('users', [UserController::class, 'index'])->name('users.index');
