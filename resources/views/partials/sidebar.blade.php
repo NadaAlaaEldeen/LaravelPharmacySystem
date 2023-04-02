@@ -14,6 +14,7 @@
       <div class="info">
         <a href="#" class="d-block">Alexander Pierce</a>
       </div>
+<<<<<<< HEAD:resources/views/contents/sidebar.blade.php
     </div>
 
     <!-- Sidebar Menu -->
@@ -89,4 +90,88 @@
     <!-- /.sidebar-menu -->
   </div>
   <!-- /.sidebar -->
+=======
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li class="nav-item">
+          @role('doctor')
+            <a href="{{route('doctors.index')}}" class="nav-link">
+            @else
+            @role('admin')
+            <a href="{{route('admins.index')}}" class="nav-link">
+            @else
+            <a href="#" class="nav-link">
+            @endrole
+            @endrole
+            <img src="dist/img/images/pharmacyicon.png" class="nav-icon">
+              <p>
+              Pharmacies
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <img src="dist/img/images/doctorsicon.png" class="nav-icon">
+              <p>
+                Doctors
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <img src="dist/img/images/usericon.png" class="nav-icon">
+              <p>
+                Users
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <img src="dist/img/images/areaicon.png" class="nav-icon" style="height:3vh">
+              <p>
+                Areas
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <img src="dist/img/images/addressicon.png" class="nav-icon" style="height:5vh">
+              <p>
+                User Addresses
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <img src="dist/img/images/medicineicon.png" class="nav-icon">
+              <p>
+                Medicines
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <img src="dist/img/images/ordericon.png" class="nav-icon">
+              <p>
+                Orders
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <img src="dist/img/images/revenueicon.png" class="nav-icon">
+              <p>
+                Revenue
+              </p>
+            </a>
+          </li>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+>>>>>>> 83c45270399cb11b042267fc9396eeeacabacec4:resources/views/partials/sidebar.blade.php
 </aside>

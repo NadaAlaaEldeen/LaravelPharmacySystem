@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "barryvdh/laravel-snappy": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/cashier": "^14.9",
         "laravel/framework": "^10.0",
@@ -15,6 +16,10 @@
         "laravel/ui": "^4.2",
         "spatie/laravel-permission": "^5.10",
         "stripe/stripe-php": "^10.12",
+<<<<<<< HEAD
+=======
+        "yajra/laravel-datatables": "^10.0",
+>>>>>>> 83c45270399cb11b042267fc9396eeeacabacec4
         "yajra/laravel-datatables-oracle": "^10.0"
     },
     "require-dev": {
