@@ -3,7 +3,8 @@
 @section('content')
 
 <section class="container-fluid">
-   <!-- content of page -->
+    <!-- content of page -->
+    <h1>Admin<h1>
 </section>
 
 

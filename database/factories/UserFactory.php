@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -24,6 +25,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => Hash::make('123456'),
             'remember_token' => Str::random(10),
+            
+
         ];
     }
 
