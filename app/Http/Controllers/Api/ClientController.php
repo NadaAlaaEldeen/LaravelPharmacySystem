@@ -40,16 +40,15 @@ class ClientController extends Controller
             'avatar' => $avatar,
             'mobile' => $mobile,
             'national_id' => $national_id,
-            'role' => 'Client'
         ]);
         $user = $user->refresh();
         $success['message'] = 'the verification email sent to you Please click on verify user button on this mail';
 
         event(new Registered($user));
-        // Client::create([
-        //     'user_id' => $user->id,
-        //     'is_inquired' => $is_inquired
-        // ]);
+        Client::create([
+            'user_id' => $user->id,
+            'is_inquired' => $is_inquired
+        ]);
 
         return response()->json([
             'success' => $success,
