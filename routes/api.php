@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\Api\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,4 @@ Route::post('users', [ClientController::class, 'store']);
 Route::put('users/{users}', [ClientController::class, 'update'])->name('users.update')->middleware('auth:sanctum');
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend/{id}', [VerificationController::class, 'resend'])->name('verification.resend');
+Route::post('/login', [LoginController::class, 'login']);
