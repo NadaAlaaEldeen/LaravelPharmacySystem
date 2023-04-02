@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('doctors', function (Blueprint $table) {
-            // $table->id();
+            $table->id();
             $table->boolean('is_ban');
             $table->date('created_at')->format('d/m/Y');
         });
