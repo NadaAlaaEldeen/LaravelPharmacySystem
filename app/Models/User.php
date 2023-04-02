@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function address()
+    public function addresses()
     {
         return $this->belongsToMany(Address::class);
     }
@@ -62,6 +62,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Doctor::class);
  
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+ 
+    }
+
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class, "pharmacy_id");
     }
  
 }
