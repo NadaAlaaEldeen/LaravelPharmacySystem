@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_ban');
-            $table->date('created_at')->format('d/m/Y');
+            $table->boolean('is_ban')->default(false);
+            // $table->date('created_at')->format('d/m/Y');
+            $table->timestamps();
         });
     }
 
