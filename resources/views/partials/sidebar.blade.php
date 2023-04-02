@@ -19,9 +19,17 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-         
-          <li class="nav-item">
+
+        <li class="nav-item">
+          @role('doctor')
+            <a href="{{route('doctors.index')}}" class="nav-link">
+            @else
+            @role('admin')
+            <a href="{{route('admins.index')}}" class="nav-link">
+            @else
             <a href="#" class="nav-link">
+            @endrole
+            @endrole
             <img src="dist/img/images/pharmacyicon.png" class="nav-icon">
               <p>
               Pharmacies
@@ -30,7 +38,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-                <img src="dist/img/images/doctorsicon.png" class="nav-icon">
+              <img src="dist/img/images/doctorsicon.png" class="nav-icon">
               <p>
                 Doctors
               </p>
@@ -39,47 +47,47 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-            <img src="dist/img/images/usericon.png" class="nav-icon">
+              <img src="dist/img/images/usericon.png" class="nav-icon">
               <p>
-              Users
+                Users
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-            <img src="dist/img/images/areaicon.png" class="nav-icon" style="height:3vh">
+              <img src="dist/img/images/areaicon.png" class="nav-icon" style="height:3vh">
               <p>
-              Areas
+                Areas
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-            <img src="dist/img/images/addressicon.png" class="nav-icon" style="height:5vh">
+              <img src="dist/img/images/addressicon.png" class="nav-icon" style="height:5vh">
               <p>
-              User Addresses
+                User Addresses
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-            <img src="dist/img/images/medicineicon.png" class="nav-icon">
+              <img src="dist/img/images/medicineicon.png" class="nav-icon">
               <p>
-              Medicines
+                Medicines
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-            <img src="dist/img/images/ordericon.png" class="nav-icon">
+              <img src="dist/img/images/ordericon.png" class="nav-icon">
               <p>
-              Orders
+                Orders
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-                <img src="dist/img/images/revenueicon.png" class="nav-icon">
+              <img src="dist/img/images/revenueicon.png" class="nav-icon">
               <p>
                 Revenue
               </p>
@@ -89,5 +97,4 @@
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-  </aside>
-  
+</aside>
