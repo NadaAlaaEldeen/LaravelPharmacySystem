@@ -9,11 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Cashier\Billable;
+use App\Notifications\greetingNotification;
 
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, Billable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -51,4 +52,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // public function sendApiEmailVerificationNotification()
+    // {
+    // $this->notify(new greetingNotification); // my notification
+    // }
+
+    // public function markEmailAsVerified() {
+
+    // } 
 }
