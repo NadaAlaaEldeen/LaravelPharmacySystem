@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,3 +36,4 @@ Route::post('address', [AddressController::class, 'create'])->name('addresses.cr
 Route::get('address', [AddressController::class, 'index'])->name('addresses.index');
 Route::put('address/{id}', [AddressController::class, 'update'])->name('addresses.update');
 Route::delete('address/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+Route::post('/login', [LoginController::class, 'login']);
