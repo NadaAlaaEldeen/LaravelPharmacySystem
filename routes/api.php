@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
 use App\Http\Controllers\VerificationController;
-
+use App\Http\Controllers\Api\AddressController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,5 +25,12 @@ use App\Http\Controllers\VerificationController;
 Auth::routes(['verify' => true]);
 Route::post('users', [ClientController::class, 'store']);
 Route::put('users/{users}', [ClientController::class, 'update'])->name('users.update')->middleware('auth:sanctum');
+
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend/{id}', [VerificationController::class, 'resend'])->name('verification.resend');
+
+
+Route::post('address', [AddressController::class, 'create'])->name('addresses.create');
+Route::get('address', [AddressController::class, 'index'])->name('addresses.index');
+Route::put('address/{id}', [AddressController::class, 'update'])->name('addresses.update');
+Route::delete('address/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
