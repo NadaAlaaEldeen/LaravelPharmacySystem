@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,14 @@ Route::put('users/{users}', [ClientController::class, 'update'])->name('users.up
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend/{id}', [VerificationController::class, 'resend'])->name('verification.resend');
 
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('address', [AddressController::class, 'create'])->name('addresses.create');
+    Route::get('address', [AddressController::class, 'index'])->name('addresses.index');
+    Route::put('address/{id}', [AddressController::class, 'update'])->name('addresses.update');
+    Route::delete('address/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+});
 
-Route::post('address', [AddressController::class, 'create'])->name('addresses.create')->middleware('auth:sanctum');
-Route::get('address', [AddressController::class, 'index'])->name('addresses.index')->middleware('auth:sanctum');
-Route::put('address/{id}', [AddressController::class, 'update'])->name('addresses.update')->middleware('auth:sanctum');
-Route::delete('address/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy')->middleware('auth:sanctum');
+
+Route::get('/order/{order}', [OrderController::class, 'show'])->name('orders.show')->middleware('auth:sanctum');
+Route::get('/order', [OrderController::class, 'index'])->name('orders.index')->middleware('auth:sanctum');
 Route::post('/login', [LoginController::class, 'login']);
