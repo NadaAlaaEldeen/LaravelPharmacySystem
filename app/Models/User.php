@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Cashier\Billable;
+use App\Notifications\greetingNotification;
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -61,7 +62,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function doctor()
     {
         return $this->hasOne(Doctor::class);
- 
     }
 
     public function client()

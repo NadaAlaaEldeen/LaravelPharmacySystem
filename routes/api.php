@@ -2,10 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ClientController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
+use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,24 +25,15 @@ use App\Models\User;
 //     return $request->user();
 // });
 Auth::routes(['verify' => true]);
+Route::post('users', [ClientController::class, 'store']);
+Route::put('users/{users}', [ClientController::class, 'update'])->name('users.update')->middleware('auth:sanctum');
 
-Route::post('users', [UserController::class, 'store']);
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::get('email/resend/{id}', [VerificationController::class, 'resend'])->name('verification.resend');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
 
-    // TODO: update email verified at 
-    // $user = User::find($request->id);
-    // $user->email_verified_at = date("Y-m-d g:i:s");
-    // $user->save();
-
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('address', [AddressController::class, 'create'])->name('addresses.create')->middleware('auth:sanctum');
+Route::get('address', [AddressController::class, 'index'])->name('addresses.index')->middleware('auth:sanctum');
+Route::put('address/{id}', [AddressController::class, 'update'])->name('addresses.update')->middleware('auth:sanctum');
+Route::delete('address/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy')->middleware('auth:sanctum');
+Route::post('/login', [LoginController::class, 'login']);
