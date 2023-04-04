@@ -9,14 +9,43 @@ class Order extends Model
 {
     use HasFactory;
 
+   
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'id',
         'status',
         'is_insured',
-        'user_id',
+        'total_price',
+        'created_at',
+        'updated_at',
         'pharmacy_id',
-        'address_id',	
-        'doctor_id'
+       
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        
+        
+        
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+           'created_at' => 'datetime',
+           'updated_at' => 'datetime',
+
     ];
 
     // public function order_image() { 
@@ -35,6 +64,7 @@ class Order extends Model
     public function order_image() { 
         return $this->hasMany(OrderImage::class);
        } 
+
     public function pharmacy()
     {
         return $this->belongsTo(Pharmacy::class, "pharmacy_id");
@@ -56,5 +86,6 @@ class Order extends Model
     {
         return $this->belongsToMany(Medicine::class)->withPivot('quantity');
     }
+
 
 }
