@@ -45,6 +45,10 @@ class Order extends Model
         return $this->belongsTo(User::class, "doctor_id");
     }
 
+    public function address() { 
+            return $this->belongsTo(Address::class);
+           } 
+
     public function client(){
         return $this->belongsTo(Client::class);
     }

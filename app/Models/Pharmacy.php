@@ -23,12 +23,17 @@ class Pharmacy extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'owner_user_id');
+    }
+
+    public function type()
+    {
+        return $this->morphOne(User::class, 'typeable');
     }
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class);
+        return $this->hasMany(Doctor::class, "id");
     }
 
 

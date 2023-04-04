@@ -9,7 +9,8 @@
                     <tr>
                     <th>ID</th>
                         <th>Name</th>
-                        <th>Address</th>
+                        <th>Type</th>
+                        <th>Price</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -26,7 +27,7 @@
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('areas.index') }}",
+            ajax: "{{ route('medicines.index') }}",
             columns: [{
                     data: 'id',
                     name: 'id'
@@ -36,8 +37,12 @@
                     name: 'name'
                 },
                 {
-                    data: 'address',
-                    name: 'address'
+                    data: 'type',
+                    name: 'type'
+                },
+                {
+                    data: 'price',
+                    name: 'price'
                 },
                 {
                     data: 'action',

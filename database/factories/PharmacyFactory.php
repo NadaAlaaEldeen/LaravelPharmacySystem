@@ -17,8 +17,8 @@ class PharmacyFactory extends Factory
     public function definition(): array
     {
         return [
-            'area_id' => fake()->numberBetween($min = 1, $max = 5),
-            'owner_user_id' => fake()->numberBetween($min = 1, $max = 21),
+            'area_id' => fake()->numberBetween($min = 2, $max = 5),
+            'owner_user_id' => fake()->numberBetween($min = 2, $max = 11),
             'priority' => fake()->unique()->numberBetween($min = 1, $max = 5),
         ];
     }

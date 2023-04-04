@@ -16,11 +16,11 @@ class Area extends Model
     ];
 
     public function addresses() { 
-        return $this->hasMany(Address::class);
+        return $this->hasMany(Address::class, 'area_id');
        } 
 
        public function pharmacies()
        {
-           return $this->hasMany(Pharmacy::class,'area_id');
+           return $this->hasMany(Pharmacy::class,'id');
        }
 }

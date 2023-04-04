@@ -15,14 +15,19 @@ class Doctor extends Model
         'created_at',
     ];
 
+    public function type()
+    {
+        return $this->morphOne(User::class, 'typeable');
+    }
+
     public function pharmacy()
     {
-        return $this->belongsTo(Pharmacy::class);
+        return $this->belongsTo(Pharmacy::class, "pharmacy_id");
     }
 
     public function user()
     {
-        return $this->belongsTo( User::class);
+        return $this->belongsTo( User::class, "user_id");
     }
 
     public function order(){

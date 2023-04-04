@@ -56,23 +56,28 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function addresses()
     {
-        return $this->belongsToMany(Address::class);
+        return $this->hasMany(Address::class, "id");
     }
 
     public function doctor()
     {
-        return $this->hasOne(Doctor::class);
+        return $this->hasOne(Doctor::class, "id");
     }
 
     public function client()
     {
-        return $this->hasOne(Client::class);
+        return $this->hasOne(Client::class, "id");
  
     }
 
     public function pharmacy()
     {
-        return $this->belongsTo(Pharmacy::class, "pharmacy_id");
+        return $this->hasOne(Pharmacy::class, "id");
+    }
+
+    public function typeable()
+    {
+        return $this->morphTo();
     }
  
 }

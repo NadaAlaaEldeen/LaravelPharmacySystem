@@ -12,8 +12,14 @@ class Client extends Model
         'user_id',
         'is_inquired'
     ];
+
+    public function type()
+    {
+        return $this->morphOne(User::class, 'typeable');
+    }
+    
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo( User::class, "user_id");
     }
 }
