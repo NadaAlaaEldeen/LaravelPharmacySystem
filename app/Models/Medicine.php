@@ -10,8 +10,14 @@ class Medicine extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'name',
         'type',
         'price',
     ];
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

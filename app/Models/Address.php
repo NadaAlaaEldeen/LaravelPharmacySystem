@@ -30,4 +30,5 @@ class Address extends Model
     {
         return $this->belongsTo(Area::class);
     }
+    
 }

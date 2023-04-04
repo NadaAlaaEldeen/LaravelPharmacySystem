@@ -11,7 +11,9 @@ use App\Models\Client;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResources;
+
 
 class ClientController extends Controller
 {
@@ -52,7 +54,7 @@ class ClientController extends Controller
 
         return response()->json([
             'success' => $success,
-            'Data' => new UserResources($user)
+            'Data' => new UserResource($user)
         ], 201);
     }
     public function update($id, Request $request)
@@ -61,23 +63,24 @@ class ClientController extends Controller
 
         $user->name = request()->name;
         $user->gender = request()->gender;
-        $user->password = request()->password;
+        $user->password = Hash::make(request()->password);
         $user->birth_day = request()->birth_day;
         $user->avatar = request()->avatar;
         $user->mobile = request()->mobile;
         $user->national_id = request()->national_id;
 
-        $new_name = time() . '.' . $request()->avatar->getClientOriginalExtension();
-        $request()->avatar->move(public_path('images/clients'), $new_name);
+        // $new_name = time() . '.' . $request()->avatar->getClientOriginalExtension();
+        // $request()->avatar->move(public_path('images/clients'), $new_name);
 
         $client = Client::where('user_id', $user->id)->first();
         $client->is_inquired = request()->is_inquired;
 
         $user->update();
         $client->update();
+        // return "done" ;
         return response()->json([
             'success' => 'User was updated successfully',
-            'Data' => new UserResources($user)
+            'Data' => new UserResource($user)
         ], 200);
     }
 }

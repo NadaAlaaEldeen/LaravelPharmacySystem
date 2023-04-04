@@ -21,8 +21,6 @@ class AddressController extends Controller
 
     public function create(Request $request)
     {
-        // $user = User::find(1);
-        // Auth::login($user);
         if ($request['is_main']) {
             $userAddresses = Address::where('user_id', Auth::id())->get();
             foreach ($userAddresses as $address) {
@@ -49,9 +47,6 @@ class AddressController extends Controller
 
     public function update($id, Request $request)
     {
-        // $user = User::find(1);
-        // Auth::login($user);
-
         if ($request['is_main']) {
             $userAddresses = Address::where('user_id', Auth::id())->get();
             foreach ($userAddresses as $address) {
