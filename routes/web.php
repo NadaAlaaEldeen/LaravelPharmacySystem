@@ -25,9 +25,7 @@ Route::get('/', function () {
 })->middleware(['auth']);
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
-    // Route::get('/admin', function () {
-    //     return view('Admin/index');
-    // })->name('admins.index');
+
     Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
     Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -47,8 +45,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 //     })->name('pharmacies.index');
 // });
 
-
-// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

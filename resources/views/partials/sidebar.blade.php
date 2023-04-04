@@ -24,7 +24,7 @@
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
           @role('pharmacy')
-            <a href="{{route('doctors.index')}}" class="nav-link">
+            <a href="{{route('pharmacies.index')}}" class="nav-link">
             @else
             @role('admin')
             <a href="{{route('pharmacies.index')}}" class="nav-link">
