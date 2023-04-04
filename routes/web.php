@@ -62,3 +62,12 @@ Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.pos
 // ------------------------------Medicines routes-----------------------------
 
 Route::get("/medicines", [MedicineController::class, "index"])->name("medicines.index");
+Route::get('/medicine/create', [MedicineController::class, 'create'])->name('medicine.create');
+Route::post('/medicine', [MedicineController::class,"store"])->name("medicine.store");
+Route::get('/medicine/edit/{medicine}', [MedicineController::class, 'edit'])->name('medicine.edit');
+Route::put('/medicine/{medicine}',[MedicineController::class , 'update'])->name('medicine.update');
+Route::get('/medicine/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicine.destroy');
+
+
+
+//----------------------------------Doctor Routes----------------------------------------//
