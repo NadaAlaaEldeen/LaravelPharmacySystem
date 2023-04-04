@@ -13,6 +13,7 @@ class Pharmacy extends Model
         'priority',
         'owner_user_id',
         'area_id',
+        'name'
     ];
 
 
@@ -39,7 +40,6 @@ class Pharmacy extends Model
 
     public function orders()
     {
-       return $this->hasMany(Order::class,'pharmacy_id');
+        return $this->hasMany(Order::class, 'pharmacy_id');
     }
-
 }
