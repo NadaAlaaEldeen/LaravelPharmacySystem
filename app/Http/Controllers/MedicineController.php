@@ -30,9 +30,7 @@ class MedicineController extends Controller
 
     public function create()
     {
-
         return view('medicine/create');
-
     }
     /**
      * Store a newly created resource in storage.
@@ -43,6 +41,7 @@ class MedicineController extends Controller
             'name' => $request->name,
             'type' => $request->type,
             'price' =>  $request->price,
+            
         ]);
 
         return redirect()->route('medicines.index');

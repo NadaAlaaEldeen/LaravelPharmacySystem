@@ -1,6 +1,10 @@
 @extends('layouts.container')
 
 @section('content')
+<div class="card-header">
+    <h3 class="card-title">Areas DataTable</h3>
+    <a href="#" class="btn btn-info float-right"></i>Add new Area</a>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-12 table-responsive">
