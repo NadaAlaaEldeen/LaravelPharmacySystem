@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ClientController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
+use App\Models\Order;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\LoginController;
@@ -43,3 +44,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::get('/order/{order}', [OrderController::class, 'show'])->name('orders.show')->middleware('auth:sanctum');
 Route::get('/order', [OrderController::class, 'index'])->name('orders.index')->middleware('auth:sanctum');
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/orders', [OrderController::class, 'store']);
+Route::put('/orders/{id}', [OrderController::class, 'update'])->middleware('auth:sanctum');
