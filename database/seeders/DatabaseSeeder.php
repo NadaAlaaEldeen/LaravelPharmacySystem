@@ -20,5 +20,12 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
+        $this->call(AreaSeeder::class);
+        $this->call(AddressSeeder::class);
+        $this->call(MedicineSeeder::class);
+        $this->call(PharmacySeeder::class);
+        $this->call(DoctorSeeder::class);
+        $this->call(ClientSeeder::class);
+        $this->call(OrderSeeder::class);
     }
 }

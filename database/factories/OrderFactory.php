@@ -17,7 +17,13 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => fake()->numberBetween($min = 1, $max = 10),
+            'doctor_id' => fake()->numberBetween($min = 1, $max = 5),
+            'pharmacy_id' => fake()->numberBetween($min = 1, $max = 5),
+            'address_id' => fake()->numberBetween(1, 5),
+            'is_insured'=>fake()->boolean(),
+            'status'=>'new',
+            'total_price'=>fake()->numberBetween(10, 500),
         ];
     }
 }

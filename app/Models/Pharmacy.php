@@ -13,28 +13,33 @@ class Pharmacy extends Model
         'priority',
         'owner_user_id',
         'area_id',
+        'name'
     ];
 
 
     public function area()
     {
-        return $this->belongsTo(Area::class);
+        return $this->belongsTo(Area::class, 'area_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'owner_user_id');
+    }
+
+    public function type()
+    {
+        return $this->morphOne(User::class, 'typeable');
     }
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class);
+        return $this->hasMany(Doctor::class, "id");
     }
 
 
     public function orders()
     {
-       return $this->hasMany(Order::class,'pharmacy_id');
+        return $this->hasMany(Order::class, 'pharmacy_id');
     }
-
 }

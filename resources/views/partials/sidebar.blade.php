@@ -19,32 +19,43 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-      <li class="nav-item">
-          @role('doctor')
+      
+    <!-- pharmacy menu -->
+      @hasanyrole("pharmacy|admin")
+        <li class="nav-item">
+          @role('pharmacy')
             <a href="{{route('doctors.index')}}" class="nav-link">
             @else
             @role('admin')
-            <a href="{{route('admins.index')}}" class="nav-link">
+            <a href="{{route('pharmacies.index')}}" class="nav-link">
             @else
             <a href="#" class="nav-link">
             @endrole
             @endrole
             <img src="dist/img/images/pharmacyicon.png" class="nav-icon">
-              <p>
-              Pharmacies
+            <p>
+                            @role("admin") Pharmacies @endrole
+                            @role("pharmacy") Pharmacy @endrole
               </p>
             </a>
-          </li>
+        </li>
+      @endrole  
+
+    <!-- doctors menu -->
+      @hasanyrole("pharmacy|admin")
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{route('doctors.index')}}" class="nav-link">
             <img src="dist/img/images/doctorsicon.png" class="nav-icon">
             <p>
               Doctors
             </p>
           </a>
         </li>
+        @endrole  
 
+    <!-- menu for admins only -->
+        @role('admin')
+        <!-- user menu -->
         <li class="nav-item">
           <a href="{{ route('users.index') }}" class="nav-link">
             <img src="dist/img/images/usericon.png" class="nav-icon">
@@ -53,30 +64,36 @@
             </p>
           </a>
         </li>
+        <!-- areas menu -->
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('areas.index')}}" class="nav-link">
             <img src="dist/img/images/areaicon.png" class="nav-icon" style="height:3vh">
             <p>
               Areas
             </p>
           </a>
         </li>
+        <!-- user addresses menu -->
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{route('addresses.index')}}" class="nav-link">
             <img src="dist/img/images/addressicon.png" class="nav-icon" style="height:5vh">
             <p>
               User Addresses
             </p>
           </a>
         </li>
+        @endrole
+
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('medicines.index')}}" class="nav-link">
             <img src="dist/img/images/medicineicon.png" class="nav-icon">
             <p>
               Medicines
             </p>
           </a>
         </li>
+
+
         <li class="nav-item">
           <a href="#" class="nav-link">
             <img src="dist/img/images/ordericon.png" class="nav-icon">
@@ -85,6 +102,9 @@
             </p>
           </a>
         </li>
+
+      <!-- Revenue menu -->
+      @hasanyrole("pharmacy|admin")
         <li class="nav-item">
           <a href="#" class="nav-link">
             <img src="dist/img/images/revenueicon.png" class="nav-icon">
@@ -93,6 +113,7 @@
             </p>
           </a>
         </li>
+      @endrole
     </nav>
     <!-- /.sidebar-menu -->
   </div>

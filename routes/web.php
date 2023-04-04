@@ -4,7 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\AreaController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\UserAdressController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,28 +25,28 @@ Route::get('/', function () {
 })->middleware(['auth']);
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
-    Route::get('/admin', function () {
-        return view('Admin/index');
-    })->name('admins.index');
+    // Route::get('/admin', function () {
+    //     return view('Admin/index');
+    // })->name('admins.index');
+    Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
+    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/addresses', [UserAdressController::class, 'index'])->name('addresses.index');
+    Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
 });
 
-Route::group(['middleware' => ['auth', 'role:doctor']], function () {
-    Route::get('/doctor', function () {
-        return view('Doctor/index');
-    })->name('doctors.index');
-});
+// Route::group(['middleware' => ['auth', 'role:doctor']], function () {
+//     Route::get('/doctor', function () {
+//         return view('Doctor/index');
+//     })->name('doctors.index');
+// });
 
-Route::group(['middleware' => ['auth', 'role:pharmacy']], function () {
-    Route::get('/pharmacy', function () {
-        return view('Pharmacy/index');
-    })->name('pharmacies.index');
-});
+// Route::group(['middleware' => ['auth', 'role:pharmacy']], function () {
+//     Route::get('/pharmacy', function () {
+//         return view('Pharmacy/index');
+//     })->name('pharmacies.index');
+// });
 
-Route::group(['middleware' => ['auth', 'role:client']], function () {
-    Route::get('/client', function () {
-        return view('client');
-    })->name('clients.index');
-});
 
 // Auth::routes();
 
@@ -50,13 +54,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes(['register' => false]);
 
-// Route::get('/register', function() {
-//     return redirect('/login');
-// });
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
-Route::get('users', [UserController::class, 'index'])->name('users.index');
+
+// ------------------------------Medicines routes-----------------------------
+
+Route::get("/medicines", [MedicineController::class, "index"])->name("medicines.index");

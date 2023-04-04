@@ -7,9 +7,10 @@
             <table class="table table-bordered user_datatable">
                 <thead>
                     <tr>
-                    <th>ID</th>
-                        <th>Name</th>
-                        <th>Address</th>
+                        <th>ID</th>
+                        <th>Client Name</th>
+                        <th>Client Email</th>
+                        <th>Is_inquired</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -26,18 +27,22 @@
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('areas.index') }}",
+            ajax: "{{ route('users.index') }}",
             columns: [{
                     data: 'id',
                     name: 'id'
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'Name',
+                    name: 'Name'
                 },
                 {
-                    data: 'address',
-                    name: 'address'
+                    data: 'Email',
+                    name: 'Email'
+                },
+                {
+                    data: 'is_inquired',
+                    name: 'is_inquired'
                 },
                 {
                     data: 'action',

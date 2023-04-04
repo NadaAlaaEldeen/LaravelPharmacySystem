@@ -22,13 +22,17 @@ class AdminSeeder extends Seeder
         ])->assignRole('admin');
 
         //fack data for clients
-        User::factory(10)->create()->each(function($user){
+        User::factory(5)->create()->each(function($user){
             $user->assignRole('client');
         });
 
         //fack data for doctors
-        User::factory(10)->create()->each(function($user){
+        User::factory(5)->create()->each(function($user){
             $user->assignRole('doctor');
+        });
+        
+        User::factory(5)->create()->each(function($user){
+            $user->assignRole('pharmacy');
         });
     }
 }

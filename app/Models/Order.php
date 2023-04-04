@@ -16,16 +16,13 @@ class Order extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'status',
         'is_insured',
         'total_price',
         'created_at',
         'updated_at',
         'pharmacy_id',
-        'address_id',
-        'user_id',
-        'prescription',
-        'cancellation_reason'
        
     ];
 
@@ -48,22 +45,47 @@ class Order extends Model
     protected $casts = [
            'created_at' => 'datetime',
            'updated_at' => 'datetime',
+
     ];
+
+    // public function order_image() { 
+    //     return $this->hasMany(OrderImage::class);
+    //    } 
+    // public function user() { 
+    //     return $this->hasMany(User::class);
+    //    } 
+    // public function pharmacy() { 
+    //     return $this->hasMany(Pharmacy::class);
+    //    } 
+    // public function address() { 
+    //     return $this->hasMany(Address::class);
+    //    } 
 
     public function order_image() { 
         return $this->hasMany(OrderImage::class);
        } 
-    public function user() { 
-        // return $this->hasMany(User::class);
-        return $this->belongsTo(User::class);
 
-       } 
-    public function pharmacy() { 
-        // return $this->hasMany(Pharmacy::class);
-        return $this->belongsTo(Pharmacy::class);
-       } 
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class, "pharmacy_id");
+    }
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, "doctor_id");
+    }
     public function address() { 
-        // return $this->hasMany(Address::class);
-        return $this->belongsTo(Address::class);
-       } 
+            return $this->belongsTo(Address::class);
+           } 
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    public function medicine()
+    {
+        return $this->belongsToMany(Medicine::class)->withPivot('quantity');
+    }
+
+
 }
