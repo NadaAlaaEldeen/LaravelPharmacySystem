@@ -58,11 +58,11 @@ Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.pos
 // ------------------------------Medicines routes-----------------------------
 
 Route::get("/medicines", [MedicineController::class, "index"])->name("medicines.index");
-Route::get('/medicine/create', [MedicineController::class, 'create'])->name('medicine.create');
-Route::post('/medicine', [MedicineController::class,"store"])->name("medicine.store");
-Route::get('/medicine/edit/{medicine}', [MedicineController::class, 'edit'])->name('medicine.edit');
-Route::put('/medicine/{medicine}',[MedicineController::class , 'update'])->name('medicine.update');
-Route::get('/medicine/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicine.destroy');
+Route::get('/medicines/create', [MedicineController::class, 'create'])->name('medicines.create');
+Route::post('/medicines', [MedicineController::class,"store"])->name("medicines.store");
+Route::get('/medicines/edit/{medicine}', [MedicineController::class, 'edit'])->name('medicines.edit');
+Route::put('/medicines/{medicine}',[MedicineController::class , 'update'])->name('medicines.update');
+Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 
 
 

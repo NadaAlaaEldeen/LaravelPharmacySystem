@@ -7,7 +7,7 @@
             <h3 class="card-title">Edit Medicine</h3>
         </div>
         <div class="d-flex justify-content-center">
-            <form action="{{route("medicine.update",$medicine->id)}}" method="post" enctype="multipart/form-data"
+            <form action="{{route("medicines.update",$medicine->id)}}" method="post" enctype="multipart/form-data"
                 style="width: 800px;">
                 <div class="card-body row g-3">
                     @csrf
