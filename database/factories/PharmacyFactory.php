@@ -20,6 +20,7 @@ class PharmacyFactory extends Factory
             'area_id' => fake()->numberBetween($min = 2, $max = 5),
             'owner_user_id' => fake()->numberBetween($min = 2, $max = 11),
             'priority' => fake()->unique()->numberBetween($min = 1, $max = 5),
+            'name' => fake()->name()
         ];
     }
 }
