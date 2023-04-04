@@ -64,6 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Doctor::class, "id");
     }
 
+    public function areas()
+    {
+        return $this->hasOne(Doctor::class, "id");
+    }
+
 
     public function orders()
 {
@@ -73,7 +78,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function client()
     {
         return $this->hasOne(Client::class, "id");
- 
+
     }
 
     public function pharmacy()
@@ -85,5 +90,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->morphTo();
     }
- 
+
 }

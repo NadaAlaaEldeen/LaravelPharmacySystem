@@ -55,8 +55,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
-// ------------------------------Medicines routes-----------------------------
-
+// ------------------------------Medicines routes---------------------------------------//
 Route::get("/medicines", [MedicineController::class, "index"])->name("medicines.index");
 Route::get('/medicines/create', [MedicineController::class, 'create'])->name('medicines.create');
 Route::post('/medicines', [MedicineController::class,"store"])->name("medicines.store");
@@ -64,6 +63,20 @@ Route::get('/medicines/edit/{medicine}', [MedicineController::class, 'edit'])->n
 Route::put('/medicines/{medicine}',[MedicineController::class , 'update'])->name('medicines.update');
 Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 
+// ------------------------------Areas routes----------------------------------------//
+Route::get('/area', [App\Http\Controllers\AreaController::class, 'index'])->name('areas');
+Route::get('/area/create', [AreaController::class, 'create'])->name('areas.create');
+Route::post('/area', [AreaController::class,"store"])->name("areas.store");
+Route::get('/area/edit/{area}', [AreaController::class, 'edit'])->name('areas.edit');
+Route::put('/area/{area}',[AreaController::class , 'update'])->name('areas.update');
+Route::get('/area/delete/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
 
+// ------------------------------Pharmacies routes----------------------------------------//
+Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
+Route::get('/pharmacy/create', [PharmacyController::class, 'create'])->name('pharmacy.create');
+Route::post('/pharmacy', [PharmacyController::class,"store"])->name("pharmacy.store");
+Route::get('/pharmacy/edit/{pharmacy}', [PharmacyController::class, 'edit'])->name('pharmacy.edit');
+Route::put('/pharmacy/{pharmacy}',[PharmacyController::class , 'update'])->name('pharmacy.update');
+Route::get('/pharmacy/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacy.destroy');
 
 //----------------------------------Doctor Routes----------------------------------------//
