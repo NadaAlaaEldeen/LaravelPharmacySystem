@@ -10,6 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'status',
         'is_insured',
         'user_id',
@@ -50,6 +51,10 @@ class Order extends Model
     }
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    public function medicine()
+    {
+        return $this->belongsToMany(Medicine::class)->withPivot('quantity');
     }
 
 }
