@@ -7,8 +7,8 @@
     </div>
 @endif
 <div class="card-header">
-    <h3 class="card-title">Address DataTable</h3>
-    <a href="{{route('addresses.create')}}" class="btn btn-info float-right"></i>Add new Address</a>
+    <h3 class="card-title">Orders DataTable</h3>
+    <a href="{{route('orders.create')}}" class="btn btn-info float-right"></i>Add new Order</a>
 </div>
 <div class="container">
     <div class="row">
@@ -17,10 +17,11 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Status</th>
+                        <th>Total Price</th>
                         <th>User Name</th>
-                        <th>Area Name</th>
-                        <th>Street Name</th>
-                        <th>Buildig Number</th>
+                        <th>Doctor Name</th>
+                        <th>Doctor Name</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -37,26 +38,31 @@
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('addresses.index') }}",
+            ajax: "{{ route('orders.index') }}",
             columns: [{
                     data: 'id',
                     name: 'id'
                 },
                 {
-                    data: 'Name',
-                    name: 'Name'
+                    data: 'medicine',
+                    name: 'medicine'
                 },
                 {
-                    data: 'Address',
-                    name: 'Address'
+                    data: 'status',
+                    name: 'status'
                 },
                 {
-                    data: 'street_name',
-                    name: 'street_name'
+                    data: 'is_insured',
+                    name: 'is_insured'
+                },
+
+                {
+                    data: 'user_id',
+                    name: 'user_id'
                 },
                 {
-                    data: 'building_number',
-                    name: 'building_number'
+                    data: 'pharmacy',
+                    name: 'pharmacy'
                 },
                 {
                     data: 'action',

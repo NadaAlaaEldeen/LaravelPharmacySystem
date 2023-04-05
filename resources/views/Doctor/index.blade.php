@@ -1,6 +1,10 @@
 @extends('layouts.container')
 
 @section('content')
+<div class="card-header">
+    <h3 class="card-title">Doctors DataTable</h3>
+    <a href="{{route('Doctor.create')}}" class="btn btn-info float-right"></i>Add new Doctor</a>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-12 table-responsive">

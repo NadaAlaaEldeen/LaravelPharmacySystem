@@ -15,9 +15,9 @@ class Area extends Model
         'address',
     ];
 
-    public function addresses() { 
+    public function addresses() {
         return $this->hasMany(Address::class, 'area_id');
-       } 
+       }
 
        public function pharmacies()
        {

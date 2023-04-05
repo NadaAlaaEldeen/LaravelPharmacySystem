@@ -19,7 +19,7 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-      
+
     <!-- pharmacy menu -->
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
@@ -39,7 +39,7 @@
               </p>
             </a>
         </li>
-      @endrole  
+      @endrole
 
     <!-- doctors menu -->
       @hasanyrole("pharmacy|admin")
@@ -51,7 +51,7 @@
             </p>
           </a>
         </li>
-        @endrole  
+        @endrole
 
     <!-- menu for admins only -->
         @role('admin')
@@ -95,7 +95,7 @@
 
 
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('orders.index')}}" class="nav-link">
             <img src="{{asset("dist/img/images/ordericon.png")}}" class="nav-icon">
             <p>
               Orders

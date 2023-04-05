@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-   
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,7 +23,9 @@ class Order extends Model
         'created_at',
         'updated_at',
         'pharmacy_id',
-       
+        'user_id',
+        'doctor_id',
+
     ];
 
     /**
@@ -32,9 +34,9 @@ class Order extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        
-        
-        
+
+
+
     ];
 
     /**
@@ -48,22 +50,22 @@ class Order extends Model
 
     ];
 
-    // public function order_image() { 
+    // public function order_image() {
     //     return $this->hasMany(OrderImage::class);
-    //    } 
-    // public function user() { 
+    //    }
+    // public function user() {
     //     return $this->hasMany(User::class);
-    //    } 
-    // public function pharmacy() { 
+    //    }
+    // public function pharmacy() {
     //     return $this->hasMany(Pharmacy::class);
-    //    } 
-    // public function address() { 
+    //    }
+    // public function address() {
     //     return $this->hasMany(Address::class);
-    //    } 
+    //    }
 
-    public function order_image() { 
+    public function order_image() {
         return $this->hasMany(OrderImage::class);
-       } 
+       }
 
     public function pharmacy()
     {
@@ -73,14 +75,14 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, "doctor_id");
     }
-    public function address() { 
-            return $this->belongsTo(Address::class);
-           } 
+    public function address() {
+            return $this->belongsTo(Address::class, "address_id");
+           }
     public function client(){
         return $this->belongsTo(Client::class);
     }
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "id");
     }
     public function medicine()
     {
