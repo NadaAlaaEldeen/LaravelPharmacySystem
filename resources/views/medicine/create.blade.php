@@ -2,6 +2,16 @@
 
 @section('content')
 
+@if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
 <section class="container-fluid">
    <!-- content of page -->
    <h1 class="text-center">Pharmacy System Managment</h1>
@@ -14,8 +24,15 @@
 
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Type</label>
-            <input name="type" type="text" class="form-control" id="exampleFormControlInput2">
+            <label for="exampleFormControlTextarea1" class="form-label">Type Medicine</label>
+            <select name="type" class="form-control">
+            <option value="">Choose type of medicine</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Syrup">Syrup</option>
+                <option value="Cream">Cream</option>
+                <option value="Suppository">Suppository</option>
+                <option value="Ampol">Ampol</option>
+            </select>
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Price</label>

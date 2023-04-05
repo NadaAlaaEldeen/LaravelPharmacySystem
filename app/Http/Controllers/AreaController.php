@@ -17,8 +17,7 @@ class AreaController extends Controller
             $data = Area::select('id', 'name', 'address')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' .route("areas.index").'" class="btn btn-success btn-sm mx-2">View</a>';
-                    $btn .= '<a href="' .route("areas.edit", $row->id).'" class="btn btn-primary btn-sm mx-2">Edit</a>';
+                    $btn = '<a href="' .route("areas.edit", $row->id).'" class="btn btn-primary btn-sm mx-2">Edit</a>';
                     $btn .= '<a href="' .route("areas.destroy", $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
                     return $btn;
                 })
@@ -34,11 +33,7 @@ class AreaController extends Controller
 
     public function create()
     {
-        //$doctors = Medicine::all();
-         //dd($doctors);
-
         return view('areas.create');
-
     }
 
     /**
@@ -63,10 +58,7 @@ class AreaController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($area){
-        //dd($user_id);
-        //$users = User::all();
         $area = Area::find($area);
-        //dd($post);
         return view('areas.edit', ['area' => $area]);
     }
     /**
@@ -77,10 +69,7 @@ class AreaController extends Controller
     //     //
     // }
     public function update(Request $request, $area){
-        //dd($request);
         $area = Area::find($area);
-        //$d = $request->name;
-        //dd($d);
 
          $area->update(
             [
@@ -90,7 +79,6 @@ class AreaController extends Controller
                 $area->created_at = $request->created_at,
                 $area->updated_at= $request->updated_at
              ]);
-        //dd($doctor->name);
          return view('areas.index')->with('success', 'A Medicine is Updated Successfully!');
     }
 
@@ -101,16 +89,15 @@ class AreaController extends Controller
 
     public function destroy($area){
         $area = Area::withCount('addresses')->where('id', $area)->first();
-        //dd($doctor1);
-        //$doctor2 = User::where('id', $doctor)->first();
-        //$doctor1->doctors->where('user_id', $doctor)->delete();
-        if($area->addresses_count > 0){
-           // return response()->json(['error' => 'something went wrong'], 400);it related to another tables
+        
+        if($area->addresses_count > 0 ){
             return redirect()->route('areas')->with('success',' Cannot delete: this area has transactions');
         }
+        // $area = Area::withCount('pharmacies')->where('id', $area)->first();
+        // if($area->pharmacies_count > 0 ){
+        //     return redirect()->route('areas')->with('success',' Cannot delete: this area');
+        // }
         $area->delete();
         return redirect()->route('areas');
-        //return "hi";
-        //dd($doctor);
     }
 }
