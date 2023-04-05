@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use DataTables;
-use App\Http\Requests\StoreUsersPostRequest;
+use App\Http\Requests\StorePharmacyRequest;
 
 class PharmacyController extends Controller
 {
@@ -38,25 +38,26 @@ class PharmacyController extends Controller
 
     public function create()
     {
-        return view('pharmacy.create');
+        $areas = Area::all();
+        return view('pharmacy.create', ['areas' => $areas]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
-
-    public function store(StoreUsersPostRequest $request)
+    public function store(StorePharmacyRequest $request)
        {
-        
+        if (isset($request->password)) {
+            $request->password = bcrypt($request->password);
+        }
         $user = User::create([
-            'name' => $request->owner_name,
-            'email' => $request->owner_mail,
+            'name' => $request->name,
+            'email' => $request->email,
             'national_id' => $request->national_id,
             'gender' => $request->gender,
-            'password' => $request->password
+            'password' => $request->password,
+            'mobile' => $request->mobile,
+            'birth_day'=> $request->date_of_birth
 
         ]);
+        $user->assignRole('pharmacy');
         $pharmacy= Pharmacy::create([
             'name' => $request->pharmacy_name,
             'priority' => $request->priority,
@@ -65,12 +66,7 @@ class PharmacyController extends Controller
         ]);
         return redirect()->route('pharmacies.index');
     }
-    /**
-     * Display the specified resource.
-     */
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit($pharmacy){
 
         $users = User::all();
@@ -79,9 +75,6 @@ class PharmacyController extends Controller
     
         return view('pharmacy.edit', ['pharmacy' => $pharmacy,'users' => $users],['areas' => $areas]);
     }
-    /**
-     * Update the specified resource in storage.
-     */
 
     public function update(Request $request, $pharmacy){
         $pharmacy = Pharmacy::find($pharmacy);
@@ -99,27 +92,16 @@ class PharmacyController extends Controller
                 $pharmacy->area_id = $request->area_id,
              ]);
              
-             
-
         return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Updated Successfully!');
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
 
     public function destroy($pharmacy){
         $pharmacy = Pharmacy::where('id', $pharmacy)->first();
         if($pharmacy->doctor_count > 0){
-            // return response()->json(['error' => 'something went wrong'], 400);it related to another tables
              return redirect()->route('Pharmacy')->with('fail',' Cannot delete: this pharmacy has transactions');
          }
         $pharmacy->delete();
         return view('Pharmacy/index')->with('success', 'A Pharmacy is Updated Successfully!');
     }
-
-
-
 }
 

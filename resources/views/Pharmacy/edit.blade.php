@@ -38,8 +38,8 @@
                            name="name">
                     </div>
                     <div class="form-group col-md-6">
-                    <label for="priority">Priority</label>
-                    <input type="text" value="{{$pharmacy->priority}}" class="form-control "
+                        <label for="priority">Priority</label>
+                        <input type="text" value="{{$pharmacy->priority}}" class="form-control "
                            name="priority" id="priority">
                     </div>
                 @role('admin')
@@ -55,9 +55,13 @@
                 @endrole
                 @role('pharmacy')
                 <div class="form-group col-md-6">
-                    <label for="priority">Owner Name</label>
-                    <input type="text" value="{{$pharmacy->id}}" class="form-control">
-                    </div>
+                    <label for="priority">Area_ID</label>
+                    <input type="text" value="{{$pharmacy->area_id}}" class="form-control" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="priority">Priority</label>
+                    <input type="text" value="{{$pharmacy->priority}}" class="form-control readon;y">
+                    </div>    
                 @endrole
                     <br>
                     <div class="card-footer d-flex justify-content-end" style="width: 800px;">

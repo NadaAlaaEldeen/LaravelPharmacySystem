@@ -22,14 +22,18 @@
 <div class="d-flex justify-content-center">
     <form action="{{route('pharmacy.store')}}" method="post" enctype="multipart/form-data" style="width: 600px;">
         @csrf
-
+        
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Pharmacy Name</label>
+            <input name="pharmacy_name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Pharmacy Name">
+        </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Owner Pharmacy Name</label>
-            <input name="owner_name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Owner Name">
+            <input name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Owner Name">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Owner Pharmacy Email Addess</label>
-            <input name="owner_mail" type="text" class="form-control" id="exampleFormControlInput1"placeholder="Owner Email">
+            <input name="email" type="text" class="form-control" id="exampleFormControlInput1"placeholder="Owner Email">
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
@@ -45,20 +49,28 @@
                     <option value="male" >male</option>
                     <option value="female">female</option>
                 </select>
-        </div>        
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Pharmacy Name</label>
-            <input name="pharmacy_name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Pharmacy Name">
-
+        </div>       
+        <div class="form-group">
+            <label for="exampleInputPhone1">Phone</label>
+            <input type="text" name="mobile" class="form-control" id="exampleInputPhone1" placeholder="Enter Phone">              
+        </div> 
+        <div class="form-group">
+            <label>date of birth</label>
+            <input type="date" name="date_of_birth"  class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
         </div>
+        
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Priority</label>
             <input name="priority" type="text" class="form-control" id="exampleFormControlInput1"placeholder="Pharmacy Priority">
 
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Area_id</label>
-            <input name="area_id" type="text" class="form-control" id="exampleFormControlInput2" >
+            <label for="exampleFormControlTextarea1" class="form-label">Area_ID</label>
+            <select name="area_id" class="form-control">
+                @foreach($areas as $area)
+                        <option value="{{$area->id}}">{{$area->id}}</option>
+                @endforeach
+            </select>
         </div>
 
         <button class="btn btn-success" type="submit" style="background-color:#6D9886 ; color:white">Submit</button>
