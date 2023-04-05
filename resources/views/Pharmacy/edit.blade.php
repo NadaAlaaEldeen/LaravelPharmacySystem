@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts.container")
 
 @section("title","Edit Pharmacy")
 
