@@ -18,10 +18,11 @@
                 <thead>
                     <tr>
                     <th>ID</th>
-                        <th>Priority</th>
-                        <th>Owner Pharmacy Name</th>
-                        <th>Area Name</th>
-                        <th>Action</th>
+                    <th>Pharmacy Name</th>
+                    <th>Owner Pharmacy Name</th>
+                    <th>Area Name</th>
+                    <th>Priority</th>
+                    <th>Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -43,8 +44,8 @@
                     name: 'id'
                 },
                 {
-                    data: 'priority',
-                    name: 'priority'
+                    data: 'name',
+                    name: 'name'
                 },
                 {
                     data: 'Name',
@@ -53,6 +54,10 @@
                 {
                     data: 'area',
                     name: 'area'
+                },
+                {
+                    data: 'priority',
+                    name: 'priority'
                 },
                 {
                     data: 'action',

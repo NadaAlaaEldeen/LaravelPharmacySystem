@@ -15,7 +15,7 @@ class PharmacyController extends Controller
     {
 
         if ($request->ajax()) {
-            $data = Pharmacy::select('id', 'priority', 'owner_user_id', 'area_id')->get();
+            $data = Pharmacy::select('id', 'priority', 'owner_user_id', 'area_id', 'name')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' .route("pharmacies.index").'" class="btn btn-success btn-sm mx-2">View</a>';
@@ -96,9 +96,9 @@ class PharmacyController extends Controller
     }
 
     public function destroy($pharmacy){
-        $pharmacy = Pharmacy::where('id', $pharmacy)->first();
-        if($pharmacy->doctor_count > 0){
-             return redirect()->route('Pharmacy')->with('fail',' Cannot delete: this pharmacy has transactions');
+        $pharmacy = Pharmacy::withCount('doctors')->where('id', $pharmacy)->first();
+        if($pharmacy->doctors_count > 0){
+             return redirect()->route('pharmacies.index')->with('fail',' Cannot delete: This pharmacy has transactions');
          }
         $pharmacy->delete();
         return view('Pharmacy/index')->with('success', 'A Pharmacy is Updated Successfully!');

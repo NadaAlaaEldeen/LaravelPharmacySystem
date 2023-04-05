@@ -34,14 +34,9 @@
                     </div>
                     <div class="form-group col-md-6">
                     <label for="priority">Pharmacy Name</label>
-                    <input type="text" value="{{$pharmacy->name}}" class="form-control"
-                           name="name">
+                    <input type="text" value="{{$pharmacy->name}}" class="form-control" name="name">
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="priority">Priority</label>
-                        <input type="text" value="{{$pharmacy->priority}}" class="form-control "
-                           name="priority" id="priority">
-                    </div>
+            
                 @role('admin')
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Area_ID</label>
@@ -52,7 +47,13 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group col-md-6">
+                        <label for="priority">Priority</label>
+                        <input type="text" value="{{$pharmacy->priority}}" class="form-control "
+                           name="priority" id="priority">
+                    </div>
                 @endrole
+
                 @role('pharmacy')
                 <div class="form-group col-md-6">
                     <label for="priority">Area_ID</label>
@@ -60,9 +61,10 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="priority">Priority</label>
-                    <input type="text" value="{{$pharmacy->priority}}" class="form-control readon;y">
+                    <input type="text" value="{{$pharmacy->priority}}" class="form-control readon;" readonly>
                     </div>    
                 @endrole
+
                     <br>
                     <div class="card-footer d-flex justify-content-end" style="width: 800px;">
                         <button type="submit" class="btn btn-primary">update</button>

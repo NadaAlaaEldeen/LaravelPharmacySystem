@@ -48,12 +48,8 @@
 
                 </div>
 
-                    </div>
 
-                </div>
-
-
-            </div>
+             
             <br>
             <!-- /.card-body -->
 
