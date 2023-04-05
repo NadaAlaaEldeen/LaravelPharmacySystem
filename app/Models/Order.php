@@ -23,6 +23,8 @@ class Order extends Model
         'created_at',
         'updated_at',
         'pharmacy_id',
+        'user_id',
+        'doctor_id',
 
     ];
 
@@ -80,7 +82,7 @@ class Order extends Model
         return $this->belongsTo(Client::class);
     }
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "id");
     }
     public function medicine()
     {

@@ -16,7 +16,7 @@ class PharmacyController extends Controller
             $data = Pharmacy::select('id', 'priority', 'owner_user_id', 'area_id')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' .route("pharmacies.index").'" class="btn btn-success btn-sm mx-2">View</a>';
+                    $btn = '<a href="' .route('pharmacy.show', $row->id).'" class="btn btn-success btn-sm mx-2">View</a>';
                     $btn .= '<a href="' . route('pharmacy.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
                     $btn .= '<a href="' .route('pharmacy.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
 
@@ -32,6 +32,28 @@ class PharmacyController extends Controller
 
         return view('Pharmacy/index');
     }
+
+
+
+    public function show($pharmacy)
+    {
+        //return("hi");
+        //dd($user_id);
+        //$doctors = Doctor::find($user_id);
+        //$doctors = Doctor::where('user_id',$user_id)->get();
+        //dd($doctors);
+        //$users = User::first();
+        //dd($users);
+    //$doctors = Doctor::find($user_id);
+        //return view('doctors.show',['doctors'=>$doctors,'users' => $users]);
+
+        $users = User::all();
+        $pharmacy = User::find($pharmacy);
+        //dd($post->email);
+
+        return view('pharmacy.show',['pharmacy' => $pharmacy]);
+    }
+
 
 
     public function create()
@@ -119,14 +141,17 @@ class PharmacyController extends Controller
      */
 
     public function destroy($pharmacy){
-        $pharmacy = Pharmacy::where('id', $pharmacy)->first();
-        if($pharmacy->doctor_count > 0){
+        $pharmacy = Pharmacy::withCount('doctors')->where('id', $pharmacy)->first();
+        //dd($pharmacy);
+        if($pharmacy->doctors_count > 0){
             // return response()->json(['error' => 'something went wrong'], 400);it related to another tables
-             return redirect()->route('Pharmacy')->with('success',' Cannot delete: this pharmacy has transactions');
+            //return "hi";
+            return redirect()->route('pharmacies.index')->with('success',' Cannot delete: this pharmacy has transactions');
          }
         $pharmacy->delete();
-        return view('Pharmacy/index')->with('success', 'A Pharmacy is Updated Successfully!');
+        return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Deleted Successfully!');
     }
+
 
 
 

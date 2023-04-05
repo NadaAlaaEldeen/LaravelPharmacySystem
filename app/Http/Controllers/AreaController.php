@@ -89,14 +89,11 @@ class AreaController extends Controller
 
     public function destroy($area){
         $area = Area::withCount('addresses')->where('id', $area)->first();
-        
+
         if($area->addresses_count > 0 ){
             return redirect()->route('areas')->with('success',' Cannot delete: this area has transactions');
         }
-        // $area = Area::withCount('pharmacies')->where('id', $area)->first();
-        // if($area->pharmacies_count > 0 ){
-        //     return redirect()->route('areas')->with('success',' Cannot delete: this area');
-        // }
+        
         $area->delete();
         return redirect()->route('areas');
     }

@@ -14,14 +14,14 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return [
-        //     'id' => $this->id,
-        //     'medicine' => MedicineResource::collection($this->medicine),
-        //     'status' => $this->status,
-        //     'is_insured' => $this->is_insured,
-        //     'user_id' => $this->user_id,
-        //     'pharmacy' => new PharmacyResource($this->pharmacy),
-        // ];
+        return [
+            'id' => $this->id,
+            'medicine' => MedicineResource::collection($this->medicine),
+            'status' => $this->status,
+            'is_insured' => $this->is_insured,
+            'user_id' => $this->user_id,
+            'pharmacy' => new PharmacyResource($this->pharmacy),
+        ];
         return parent::toArray($request);
     }
 }
