@@ -26,7 +26,7 @@ class StorePharmacyRequest extends FormRequest
             'email' => ["required", "max:255", "unique:users,email"],
             'password' => ["required", "max:255", "min:6"],
             'national_id' => ["required", "max:14", "unique:users,national_id"],
-            'avatar_image' => ["nullable", "mimes:jpg,png", "size:4096"],
+            'avatar' => ["nullable", "mimes:jpg,png"],
             'gender' => ["required"],
             'mobile' => ["required", "digits:11"],
             'date_of_birth' => ["required", "date"],

@@ -15,9 +15,10 @@
     <div class="card card-primary shadow border rounded p-4 mb-5 " style="width: 850px;">
         <div class="card-header d-flex justify-content-center">
             <h3 class="card-title">Edit Pharmacy</h3>
+            
         </div>
         <div class="d-flex justify-content-center">
-            <form action="{{route("pharmacy.update",$pharmacy->id)}}" method="post" enctype="multipart/form-data"
+            <form action="{{route("pharmacies.update",$pharmacy->id)}}" method="post" enctype="multipart/form-data"
                 style="width: 800px;">
                 <div class="card-body row g-3">
                     @csrf

@@ -19,8 +19,8 @@ class PharmacyController extends Controller
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' .route("pharmacies.index").'" class="btn btn-success btn-sm mx-2">View</a>';
-                    $btn .= '<a href="' . route('pharmacy.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
-                    $btn .= '<a href="' .route('pharmacy.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
+                    $btn .= '<a href="' . route('pharmacies.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
+                    $btn .= '<a href="' .route('pharmacies.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
 
                     return $btn;
                 })->addColumn('Name',function(Pharmacy $pharmacy){
@@ -47,6 +47,10 @@ class PharmacyController extends Controller
         if (isset($request->password)) {
             $request->password = bcrypt($request->password);
         }
+        $path = null;
+        if ($request->hasFile('avatar')) /*file field has value*/{
+            $path = $request->file('avatar')->store('pharmacies', ['disk' => "public"]);
+        }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -54,7 +58,8 @@ class PharmacyController extends Controller
             'gender' => $request->gender,
             'password' => $request->password,
             'mobile' => $request->mobile,
-            'birth_day'=> $request->date_of_birth
+            'birth_day'=> $request->date_of_birth,
+            'avatar' => $path
 
         ]);
         $user->assignRole('pharmacy');

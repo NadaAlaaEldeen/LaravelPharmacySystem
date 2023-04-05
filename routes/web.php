@@ -75,8 +75,8 @@ Route::get('/area/delete/{area}', [AreaController::class, 'destroy'])->name('are
 Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
 Route::get('/pharmacy/create', [PharmacyController::class, 'create'])->name('pharmacy.create');
 Route::post('/pharmacy', [PharmacyController::class,"store"])->name("pharmacy.store");
-Route::get('/pharmacy/edit/{pharmacy}', [PharmacyController::class, 'edit'])->name('pharmacy.edit');
-Route::put('/pharmacy/{pharmacy}',[PharmacyController::class , 'update'])->name('pharmacy.update');
-Route::get('/pharmacy/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacy.destroy');
+Route::get('/pharmacy/edit/{pharmacy}', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
+Route::put('/pharmacy/{pharmacy}',[PharmacyController::class , 'update'])->name('pharmacies.update');
+Route::get('/pharmacy/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
 
 //----------------------------------Doctor Routes----------------------------------------//
