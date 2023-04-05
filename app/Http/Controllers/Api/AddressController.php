@@ -64,7 +64,8 @@ class AddressController extends Controller
             'flat_number' => $request['flat_number'],
             'is_main' => $request['is_main'],
         ]);
-        return response()->json('updated');
+        //return response()->json('updated');
+        return view('address.index')->with('success', 'A Address is Updated Successfully!');
     }
 
     public function destroy($id)

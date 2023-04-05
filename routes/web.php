@@ -79,4 +79,14 @@ Route::get('/pharmacy/edit/{pharmacy}', [PharmacyController::class, 'edit'])->na
 Route::put('/pharmacy/{pharmacy}',[PharmacyController::class , 'update'])->name('pharmacy.update');
 Route::get('/pharmacy/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacy.destroy');
 
-//----------------------------------Doctor Routes----------------------------------------//
+//----------------------------------Addresses Routes----------------------------------------//
+Route::get('/address', [App\Http\Controllers\UserAdressController::class, 'index'])->name('address');
+Route::get('/address/create', [UserAdressController::class, 'create'])->name('address.create');
+Route::post('/address', [UserAdressController::class,'store'])->name("addresses.store");
+Route::get('/address/edit/{address}', [UserAdressController::class, 'edit'])->name('address.edit');
+Route::put('/address/{address}',[UserAdressController::class , 'update'])->name('address.update');
+Route::get('/address/delete/{address}', [UserAdressController::class, 'destroy'])->name('address.destroy');
+
+
+
+

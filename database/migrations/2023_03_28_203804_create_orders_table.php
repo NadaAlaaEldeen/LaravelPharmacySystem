@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('status', ['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered']);
             $table->boolean('is_insured');
             $table->float('total_price', 8, 2);
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->timestamps();
         });
     }
