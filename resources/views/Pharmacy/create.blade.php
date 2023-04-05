@@ -20,7 +20,7 @@
     <h3 class=" text-center">Create New Medicine</h3>
 </div>
 <div class="d-flex justify-content-center ">
-    <form action="{{route('pharmacies.store')}}" method="post" enctype="multipart/form-data" class="p-5 shadow-sm" style="width:70%">
+    <form action="{{route('pharmacy.store')}}" method="post" enctype="multipart/form-data" class="p-5 shadow-sm" style="width:70%">
         @csrf
         
         <div class="mb-3">
