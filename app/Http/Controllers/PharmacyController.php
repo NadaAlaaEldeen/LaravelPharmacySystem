@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pharmacy;
 use App\Models\User;
+use App\Models\Area;
 use Illuminate\Http\Request;
 use DataTables;
+use App\Http\Requests\StoreUsersPostRequest;
 
 class PharmacyController extends Controller
 {
@@ -44,41 +46,25 @@ class PharmacyController extends Controller
      */
 
 
-    public function store(Request $request)
+    public function store(StoreUsersPostRequest $request)
        {
-        //dd($request);
-        //$pharmacy = $request()->all();
+        
+        $user = User::create([
+            'name' => $request->owner_name,
+            'email' => $request->owner_mail,
+            'national_id' => $request->national_id,
+            'gender' => $request->gender,
+            'password' => $request->password
 
+        ]);
         $pharmacy= Pharmacy::create([
-            'name' => $request->name,
+            'name' => $request->pharmacy_name,
             'priority' => $request->priority,
-            'owner_user_id' => $request->owner,
+            'owner_user_id' => $user->id,
             'area_id' => $request->area_id,
         ]);
-
-        return view('Pharmacy/index');
-        //return "hi";
+        return redirect()->route('pharmacies.index');
     }
-    // public function store(StorePharmacyRequest $request)
-    // {
-    //     dd($request);
-    //     $pharmacy = $request()->all();
-
-    //      $email = request()->priority;
-    //      dd($email);
-
-
-    //      $pharmacy->creat(
-    //         [
-    //             //column name -> came data of name of input
-    //             $pharmacy->priority => $request->priority,
-    //             $pharmacy->owner_user_id => $request->Owner,
-    //             $pharmacy->area_id = $request->area_id,
-    //          ]);
-
-    //     return to_route(route:'pharmacy');
-    // }
-
     /**
      * Display the specified resource.
      */
@@ -86,31 +72,36 @@ class PharmacyController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($pharmacy){
-        //dd($pharmacy);
+
         $users = User::all();
-        //dd($pharmacy->$users->name);
+        $areas = Area::all();
         $pharmacy = Pharmacy::find($pharmacy);
-        //dd($pharmacy);
-        return view('pharmacy.edit', ['pharmacy' => $pharmacy,'users' => $users]);
+    
+        return view('pharmacy.edit', ['pharmacy' => $pharmacy,'users' => $users],['areas' => $areas]);
     }
     /**
      * Update the specified resource in storage.
      */
 
     public function update(Request $request, $pharmacy){
-
         $pharmacy = Pharmacy::find($pharmacy);
+        $user = User::find($pharmacy->owner_user_id);
+        $user->update(
+            [
+                $user->name = $request->user_name,
+                $user->email = $request->user_mail,
+             ]);
+             
          $pharmacy->update(
             [
                 $pharmacy->name  = $request->name,
                 $pharmacy->priority  = $request->priority,
-                $pharmacy->owner_user_id = $request->owner,
                 $pharmacy->area_id = $request->area_id,
-                $pharmacy->created_at = $request->created_at,
-                $pharmacy->updated_at = $request->updated_at,
              ]);
-        //dd($doctor->name);
-        return view('Pharmacy/index')->with('success', 'A Pharmacy is Updated Successfully!');
+             
+             
+
+        return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Updated Successfully!');
     }
 
 
@@ -122,7 +113,7 @@ class PharmacyController extends Controller
         $pharmacy = Pharmacy::where('id', $pharmacy)->first();
         if($pharmacy->doctor_count > 0){
             // return response()->json(['error' => 'something went wrong'], 400);it related to another tables
-             return redirect()->route('Pharmacy')->with('success',' Cannot delete: this pharmacy has transactions');
+             return redirect()->route('Pharmacy')->with('fail',' Cannot delete: this pharmacy has transactions');
          }
         $pharmacy->delete();
         return view('Pharmacy/index')->with('success', 'A Pharmacy is Updated Successfully!');

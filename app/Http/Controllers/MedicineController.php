@@ -56,7 +56,7 @@ class MedicineController extends Controller
         return view('medicine.edit', ['medicine' => $medicine]);
     }
 
-    public function update(Request $request, $medicine){
+    public function update(StoreMedicineRequest $request, $medicine){
         $medicine = Medicine::find($medicine);
 
          $medicine->update(
@@ -65,10 +65,8 @@ class MedicineController extends Controller
                 $medicine->name = $request->name,
                 $medicine->type = $request->type,
                 $medicine->price = $request->price,
-                $medicine->created_at = $request->created_at,
-                $medicine->updated_at= $request->updated_at
              ]);
-         return view('medicine.index')->with('success', 'A Post is Updated Successfully!');
+             return redirect()->route('medicines.index')->with('success', 'An medicine is Updated Successfully!');
     }
 
 

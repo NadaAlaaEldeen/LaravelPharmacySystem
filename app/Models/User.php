@@ -77,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function client()
     {
-        return $this->hasOne(Client::class, "id");
+        return $this->hasOne(Client::class, 'owner_user_id', "id");
 
     }
 

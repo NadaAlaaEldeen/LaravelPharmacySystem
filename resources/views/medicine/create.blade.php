@@ -14,13 +14,15 @@
 
 <section class="container-fluid">
    <!-- content of page -->
-   <h1 class="text-center">Pharmacy System Managment</h1>
+   <div class="card-header mb-5">
+    <h3 class=" text-center">Create New Medicine</h3>
+</div>
    <div class="d-flex justify-content-center">
     <form action="{{route("medicines.store")}}" method="post" enctype="multipart/form-data" style="width: 600px;">
         @csrf
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Name</label>
-            <input name="name" type="text" class="form-control" id="exampleFormControlInput1">
+            <label for="exampleFormControlTextarea1" class="form-label">Medicine Name</label>
+            <input name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name">
 
         </div>
         <div class="mb-3">
