@@ -1,16 +1,10 @@
-@extends('layouts.container')
+@extends("layouts.container")
+
+@section('title')
+    Restore Deleted pharmacies
+@endsection
 
 @section('content')
-@if(session('success'))
-    <div class="col-lg-12">
-        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-    </div>
-@endif
-<div class="card-header">
-    <h3 class="card-title">Pharmacies DataTable</h3>
-    <a href="{{route('pharmacy.create')}}" class="btn btn-info float-right"></i>Add new Pharmacy</a>
-    <a href="{{route('pharmacy.restore')}}" class="btn btn-dark float-right mx-3"></i>Deleted Pharmacies</a>
-</div>
 <div class="container">
     <div class="row">
         <div class="col-12 table-responsive">
@@ -37,7 +31,7 @@
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('pharmacies.index') }}",
+            ajax: "{{ route('pharmacy.restore') }}",
             columns: [{
                     data: 'id',
                     name: 'id'

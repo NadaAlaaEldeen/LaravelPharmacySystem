@@ -9,6 +9,7 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\UserAdressController;
+use App\Http\Middleware\BanMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +25,7 @@ Route::get('/', function () {
     return view('index');
 })->middleware(['auth']);
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'role:admin'],'BanMiddleware'], function () {
 
     Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
     Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
@@ -74,6 +75,8 @@ Route::get('/area/delete/{area}', [AreaController::class, 'destroy'])->name('are
 // ------------------------------Pharmacies routes----------------------------------------//
 Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
 Route::get('/pharmacy/create', [PharmacyController::class, 'create'])->name('pharmacy.create');
+Route::get('/pharmacy/restore', [PharmacyController::class, 'restore'])->name('pharmacy.restore');
+Route::put('/pharmacy/restore/{id}', [PharmacyController::class, 'restoreOne'])->name('pharmacy.restoreOne');
 Route::post('/pharmacy', [PharmacyController::class,"store"])->name("pharmacy.store");
 Route::get('/pharmacy/edit/{pharmacy}', [PharmacyController::class, 'edit'])->name('pharmacy.edit');
 Route::put('/pharmacy/{pharmacy}',[PharmacyController::class , 'update'])->name('pharmacy.update');

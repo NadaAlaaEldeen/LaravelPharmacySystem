@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('area_id');
             $table->unique(['priority', 'area_id']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

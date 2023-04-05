@@ -39,15 +39,10 @@ class PharmacyController extends Controller
         return view('pharmacy.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
+    
 
     public function store(Request $request)
        {
-        //dd($request);
-        //$pharmacy = $request()->all();
 
         $pharmacy= Pharmacy::create([
             'name' => $request->name,
@@ -57,8 +52,9 @@ class PharmacyController extends Controller
         ]);
 
         return view('Pharmacy/index');
-        //return "hi";
     }
+
+
     // public function store(StorePharmacyRequest $request)
     // {
     //     dd($request);
@@ -79,24 +75,15 @@ class PharmacyController extends Controller
     //     return to_route(route:'pharmacy');
     // }
 
-    /**
-     * Display the specified resource.
-     */
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
+    
     public function edit($pharmacy){
-        //dd($pharmacy);
         $users = User::all();
-        //dd($pharmacy->$users->name);
         $pharmacy = Pharmacy::find($pharmacy);
-        //dd($pharmacy);
         return view('pharmacy.edit', ['pharmacy' => $pharmacy,'users' => $users]);
     }
-    /**
-     * Update the specified resource in storage.
-     */
-
+    
+    
     public function update(Request $request, $pharmacy){
 
         $pharmacy = Pharmacy::find($pharmacy);
@@ -108,20 +95,15 @@ class PharmacyController extends Controller
                 $pharmacy->area_id = $request->area_id,
                 $pharmacy->created_at = $request->created_at,
                 $pharmacy->updated_at = $request->updated_at,
-             ]);
-        //dd($doctor->name);
+            ]);
         return view('Pharmacy/index')->with('success', 'A Pharmacy is Updated Successfully!');
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
 
     public function destroy($pharmacy){
         $pharmacy = Pharmacy::where('id', $pharmacy)->first();
         if($pharmacy->doctor_count > 0){
-            // return response()->json(['error' => 'something went wrong'], 400);it related to another tables
              return redirect()->route('Pharmacy')->with('success',' Cannot delete: this pharmacy has transactions');
          }
         $pharmacy->delete();
@@ -129,6 +111,42 @@ class PharmacyController extends Controller
     }
 
 
+    public function restoreOne($id){
+        $item = Pharmacy::withTrashed()->find($id);
+        return view('Pharmacy/index');
+       
+    }
+
+    public function restore(Request $req)
+    {
+
+        if ($req->ajax()) {
+            $deleted = Pharmacy::onlyTrashed('deleted_at')->get();
+            return Datatables::of($deleted)->addIndexColumn()
+                ->addColumn('action', function ($result) {
+                    // return '<a href="' . route('pharmacy.restoreOne', $result->id) .'" class="btn btn-primary btn-sm mx-2">restore</a>';
+                    $form = '
+                    <form action="' . route('pharmacy.restoreOne', $result->id) .'" method="POST">
+                        ' . csrf_field() . '
+                        <input type="hidden" name="_method" value="PUT">
+                        <button type="submit" class="btn btn-primary btn-sm mx-2">Restore</button>
+                    </form>
+                ';
+                    return $form;
+
+                })->addColumn('Name',function(Pharmacy $pharmacy){
+                    return $pharmacy->user->name;
+                })->addColumn('area',function(Pharmacy $pharmacy){
+                    return $pharmacy->area->name;
+                })
+                ->rawColumns(['action', 'Name'])
+                ->make(true);
+        }
+
+        return view('Pharmacy/restore');
+          }
+
+        
 
 }
 
