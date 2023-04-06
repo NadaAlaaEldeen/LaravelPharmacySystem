@@ -77,7 +77,7 @@ class MedicineController extends Controller
     public function destroy($medicine){
         $medicine1 = Medicine::where('id', $medicine)->first();
         $medicine1->delete();
-        return redirect()->route('medicines.index');
+        return redirect()->route('medicines.index')->with('success', 'A Medicine is Deleted Successfully!');
     }
 
 }
