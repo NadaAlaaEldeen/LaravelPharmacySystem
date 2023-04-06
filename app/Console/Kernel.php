@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('assign:orders-to-pharmacy')->everyMinute();
         // $schedule->command('inspire')->hourly();
     }
 
