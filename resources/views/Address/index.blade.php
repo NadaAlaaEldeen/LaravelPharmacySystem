@@ -6,9 +6,9 @@
         <div class="alert alert-success" role="alert">{{ session('success') }}</div>
     </div>
 @endif
-<div class="card-header">
+<div class="card-header mb-5">
     <h3 class="card-title">Address DataTable</h3>
-    <a href="{{route('address.create')}}" class="btn btn-info float-right"></i>Add new Address</a>
+    <a href="{{route('addresses.create')}}" class="btn btn-info float-right"></i>Add new Address</a>
 </div>
 <div class="container">
     <div class="row">

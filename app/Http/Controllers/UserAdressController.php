@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\User;
+use App\Models\Area;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -17,8 +19,8 @@ class UserAdressController extends Controller
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' .route("addresses.index").'" class="btn btn-success btn-sm mx-2">View</a>';
-                    $btn .= '<a href="' .route("address.edit", $row->id).'" class="btn btn-primary btn-sm mx-2">Edit</a>';
-                    $btn .= '<a href="' .route("address.destroy", $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
+                    $btn .= '<a href="' .route("addresses.edit", $row->id).'" class="btn btn-primary btn-sm mx-2">Edit</a>';
+                    $btn .= '<a href="' .route("addresses.destroy", $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
                     return $btn;
                 })->addColumn('Name',function(Address $address){
                     return $address->user->name;
@@ -33,7 +35,10 @@ class UserAdressController extends Controller
 
     public function create()
     {
-        return view('Address.create');
+        $users = User::all();
+        $areas = Area::all();
+
+        return view('Address.create', ["users" => $users], ["areas" => $areas]);
     }
 
     public function store(Request $request)
@@ -46,16 +51,16 @@ class UserAdressController extends Controller
             'is_main' => $request->is_main,
             'area_id' => $request->area_id,
             'user_id' => $request->user_id,
-            'created_at' => $request->created_at,
-            'updated_at' => $request->updated_at,
         ]);
 
-        return to_route('address');
+        return to_route('addresses.index');
     }
 
     public function edit($address){
         $address = Address::find($address);
-        return view('address.edit', ['address' => $address]);
+        $areas = Area::all();
+        
+        return view('Address.edit', ['address' => $address], ['areas' => $areas]);
     }
     
     public function update(Request $request, $address){
@@ -70,16 +75,16 @@ class UserAdressController extends Controller
                 $address->flat_number= $request->flat_number,
                 $address->area_id= $request->area_id
               ]);
-         return view('address.create')->with('success', 'A Address is Updated Successfully!');
+         return view('Address.index')->with('success', 'A Address is Updated Successfully!');
     }
 
     public function destroy($address){
         $address = Address::withCount('order')->where('id', $address)->first();
         if($address->order_count > 0){
-             return redirect()->route('address')->with('success',' Cannot delete: this address has transactions');
+             return redirect()->route('addresses.index')->with('success',' Cannot delete: this address has transactions');
          }
         $address->delete();
-        return redirect()->route('address');
+        return redirect()->route('addresses.index');
     }
 
 
