@@ -111,14 +111,14 @@ class UserController extends Controller
     }
 
 public function destroy($user){
-        $user = User::withCount('orders')->where('id', $user)->first();
-        if($user->orders_count > 0){
+        $client = Client::withCount('orders')->where('id', $user)->first();
+        if($client->orders_count > 0){
              return redirect()->route('users.index')->with('fail',' Cannot delete: This client has transactions');
          }
-         if($user->image){
-            Storage::disk("public")->delete($user->avatar);
+         if($client->image){
+            Storage::disk("public")->delete($client->avatar);
         }
-        $pharmacy->delete();
-        return redirect()->route('pharmacies.index')->with('success', 'A client is Deleted Successfully!');
+        $client->delete();
+        return redirect()->route('users.index')->with('success', 'A client is Deleted Successfully!');
     }
 }

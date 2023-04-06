@@ -31,14 +31,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/pharmacies', [PharmacyController::class,"store"])->name("pharmacies.store");
     Route::get('/pharmacies/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
 
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class,"store"])->name("users.store");
-    Route::get('/users/{user}', [UserController::class,'show'])->name('users.show');
-    Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}',[UserController::class , 'update'])->name('users.update');
+    Route::resource('users', UserController::class);
     Route::get('/users/delete/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
 
     Route::resource('areas', AreaController::class);
     Route::get('/areas/delete/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
@@ -66,13 +60,10 @@ Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 // ------------------------------Medicines routes---------------------------------------//
-Route::get("/medicines", [MedicineController::class, "index"])->name("medicines.index");
-Route::get('/medicines/create', [MedicineController::class, 'create'])->name('medicines.create');
-Route::post('/medicines', [MedicineController::class,"store"])->name("medicines.store");
-Route::get('/medicines/edit/{medicine}', [MedicineController::class, 'edit'])->name('medicines.edit');
-Route::put('/medicines/{medicine}',[MedicineController::class , 'update'])->name('medicines.update');
+Route::group(["middleware" => ['role:admin|pharmacy|doctor']], function () {
+    Route::resource('medicines', MedicineController::class);
 Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
-
+});
 //----------------------------------Doctors Routes----------------------------------------//
 Route::get('/doctors', [App\Http\Controllers\DoctorController::class, 'index'])->name('doctor');
 Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
