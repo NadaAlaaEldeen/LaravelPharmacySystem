@@ -23,12 +23,16 @@ class Address extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class, "user_id");
     }
 
     public function area()
     {
-        return $this->belongsTo(Area::class);
+        return $this->belongsTo(Area::class, 'area_id');
     }
-    
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'address_id');
+    }
+
 }

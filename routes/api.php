@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ClientController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
+use App\Models\Order;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\LoginController;
@@ -49,3 +50,5 @@ Route::put('order/assign/{order}', [OrderController::class, 'assignPharmacyToOrd
 Route::get('order/cost/{order}', [OrderController::class, 'getTotalPrice'])->middleware('auth:sanctum');
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/orders', [OrderController::class, 'store']);
+Route::put('/orders/{id}', [OrderController::class, 'update'])->middleware('auth:sanctum');

@@ -14,7 +14,7 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $totalPrice = 0;
+        $totalPrice = 0;
         // foreach (MedicineResource::collection($this->medicines) as $medicine) {
         //     $totalPrice += $medicine->price;
         // }

@@ -15,9 +15,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('pharmacy_id');
             $table->unsignedBigInteger('address_id');
+            $table->unsignedBigInteger('doctor_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies');
             $table->foreign('address_id')->references('id')->on('addresses');
+            $table->foreign('doctor_id')->references('id')->on('doctors');
         });
     }
 

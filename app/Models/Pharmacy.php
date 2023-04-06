@@ -20,17 +20,22 @@ class Pharmacy extends Model
 
     public function area()
     {
-        return $this->belongsTo(Area::class);
+        return $this->belongsTo(Area::class, 'area_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'owner_user_id', "id");
+    }
+
+    public function type()
+    {
+        return $this->morphOne(User::class, 'typeable');
     }
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class);
+        return $this->hasMany(Doctor::class, "pharmacy_id");
     }
 
 
