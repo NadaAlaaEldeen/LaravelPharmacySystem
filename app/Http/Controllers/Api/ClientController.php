@@ -30,8 +30,8 @@ class ClientController extends Controller
         $national_id = request()->national_id;
         $is_inquired = request()->is_inquired;
 
-        // $new_name = time() . '.' . $avatar->getClientOriginalExtension();
-        // $avatar->move(public_path('images/clients'), $new_name);
+        $new_name = time() . '.' . $avatar->getClientOriginalExtension();
+        $avatar->move(public_path('images/clients'), $new_name);
 
         $user = User::create([
             'name' => $name,
@@ -39,7 +39,7 @@ class ClientController extends Controller
             'gender' => $gender,
             'password' => Hash::make($password),
             'birth_day' => $dateOfBirth,
-            'avatar' => $avatar,
+            'avatar' => $new_name,
             'mobile' => $mobile,
             'national_id' => $national_id,
         ]);

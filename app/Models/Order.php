@@ -23,6 +23,8 @@ class Order extends Model
         'created_at',
         'updated_at',
         'pharmacy_id',
+        'address_id',
+        'total_price',
         'user_id',
         'doctor_id',
 
@@ -87,6 +89,15 @@ class Order extends Model
     public function medicine()
     {
         return $this->belongsToMany(Medicine::class)->withPivot('quantity');
+    }
+    public function totalPrice()
+    {
+        $total = 0;
+        foreach ($this->medicines as $med) {
+            $total += $med->price * $med->pivot->quantity;
+        }
+
+        return $total;
     }
 
 

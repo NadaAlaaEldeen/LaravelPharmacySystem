@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_images', function (Blueprint $table) {
-            $table->id();
-            $table->string('image');
-            $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders');
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->unsignedBigInteger('pharmacy_id')->nullable()->change();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_images');
+        Schema::table('orders', function (Blueprint $table) {
+            //
+        });
     }
 };
