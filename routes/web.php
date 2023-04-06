@@ -91,12 +91,12 @@ Route::get('/address/delete/{address}', [UserAdressController::class, 'destroy']
 
 //----------------------------------Doctors Routes----------------------------------------//
 Route::get('/doctor', [App\Http\Controllers\DoctorController::class, 'index'])->name('doctor');
-Route::get('/doctor/create', [DoctorController::class, 'create'])->name('Doctor.create');
-Route::get('/doctor/{doctor}', [DoctorController::class,'show'])->name('Doctor.show');
-Route::post('/doctor', [DoctorController::class,"store"])->name("Doctor.store");
-Route::get('/doctor/edit/{doctor}', [DoctorController::class, 'edit'])->name('Doctor.edit');
-Route::put('/doctor/{doctor}',[DoctorController::class , 'update'])->name('Doctor.update');
-Route::get('/doctor/delete/{doctor}', [DoctorController::class, 'destroy'])->name('Doctor.destroy');
+Route::get('/doctor/create', [DoctorController::class, 'create'])->name('doctor.create');
+Route::get('/doctor/{doctor}', [DoctorController::class,'show'])->name('doctor.show');
+Route::post('/doctor', [DoctorController::class,"store"])->name("doctor.store");
+Route::get('/doctor/edit/{doctor}', [DoctorController::class, 'edit'])->name('doctor.edit');
+Route::put('/doctor/{doctor}',[DoctorController::class , 'update'])->name('doctor.update');
+Route::get('/doctor/delete/{doctor}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
 
 //----------------------------------Orders Routes----------------------------------------//
 Route::get('/order', [App\Http\Controllers\UserOrderController::class, 'index'])->name('orders');

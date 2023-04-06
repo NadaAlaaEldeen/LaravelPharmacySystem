@@ -1,9 +1,14 @@
 @extends('layouts.container')
 
 @section('content')
+@if(session('success'))
+    <div class="col-lg-12">
+        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+    </div>
+@endif
 <div class="card-header">
     <h3 class="card-title">Doctors DataTable</h3>
-    <a href="{{route('Doctor.create')}}" class="btn btn-info float-right"></i>Add new Doctor</a>
+    <a href="{{route('doctor.create')}}" class="btn btn-info float-right"></i>Add new Doctor</a>
 </div>
 <div class="container">
     <div class="row">
