@@ -16,6 +16,7 @@ class Order extends Model
         'user_id',
         'pharmacy_id',
         'address_id',
+        'total_price',
     ];
 
     public function order_image()
@@ -38,5 +39,14 @@ class Order extends Model
     public function medicine()
     {
         return $this->belongsToMany(Medicine::class)->withPivot('quantity');
+    }
+    public function totalPrice()
+    {
+        $total = 0;
+        foreach ($this->medicines as $med) {
+            $total += $med->price * $med->pivot->quantity;
+        }
+
+        return $total;
     }
 }

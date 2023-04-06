@@ -10,6 +10,7 @@ class Pharmacy extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'priority',
         'owner_user_id',
         'area_id',

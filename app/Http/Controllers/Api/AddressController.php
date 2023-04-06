@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
-    public function index()
+     public function index()
     {
         // $user = User::find(1);
         // Auth::login($user);
