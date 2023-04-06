@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts.container")
 
 @section('title')
 Create Area
@@ -39,14 +39,6 @@ Create Area
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">User_id</label>
             <input name="user_id" type="text" class="form-control" id="exampleFormControlInput2">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Create_at</label>
-            <input name="created_at" type="text" class="form-control" id="exampleFormControlInput2">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Updated_at</label>
-            <input name="updated_at" type="text" class="form-control" id="exampleFormControlInput2">
         </div>
 
         <button class="btn btn-success" style="background-color:#6D9886 ; color:white">Submit</button>

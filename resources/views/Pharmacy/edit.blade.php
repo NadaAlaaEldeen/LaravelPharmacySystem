@@ -15,11 +15,9 @@
     <div class="card card-primary shadow border rounded p-4 mb-5 " style="width: 850px;">
         <div class="card-header d-flex justify-content-center">
             <h3 class="card-title">Edit Pharmacy</h3>
-            
         </div>
         <div class="d-flex justify-content-center">
-            <form action="{{route("pharmacies.update",$pharmacy->id)}}" method="post" enctype="multipart/form-data"
-                style="width: 800px;">
+            <form action="{{route("pharmacies.update",$pharmacy->id)}}" method="post" enctype="multipart/form-data"style="width: 800px;">
                 <div class="card-body row g-3">
                     @csrf
                     @method("put")
@@ -36,6 +34,15 @@
                     <div class="form-group col-md-6">
                     <label for="priority">Pharmacy Name</label>
                     <input type="text" value="{{$pharmacy->name}}" class="form-control" name="name">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Avatar Image</label><br>
+                        @if ($pharmacy->user->avatar) 
+                        <img src="{{asset('storage/'.$pharmacy->user->avatar)}}"  alt="photo" style="height:30%;width:20%"> <br><br> 
+                        @else
+                        <p>No provided image</p>
+                        @endif
+                        <input class="form-control form-control-lg" id="formFileLg" name="avatar" type="file">
                     </div>
             
                 @role('admin')
@@ -58,11 +65,11 @@
                 @role('pharmacy')
                 <div class="form-group col-md-6">
                     <label for="priority">Area_ID</label>
-                    <input type="text" value="{{$pharmacy->area_id}}" class="form-control" readonly>
+                    <input type="text" name="area_id" value="{{$pharmacy->area_id}}" class="form-control" readonly>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="priority">Priority</label>
-                    <input type="text" value="{{$pharmacy->priority}}" class="form-control readon;" readonly>
+                    <input type="text" name="priority" value="{{$pharmacy->priority}}" class="form-control readon;" readonly>
                     </div>    
                 @endrole
 

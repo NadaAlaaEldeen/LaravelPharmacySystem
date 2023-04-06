@@ -7,9 +7,14 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(session('success'))
+    <div class="col-lg-12">
+        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+    </div>
+@endif
 <div class="card-header mb-5">
     <h3 class="card-title">Pharmacies DataTable</h3>
-    <a href="{{route('pharmacy.create')}}" class="btn btn-info float-right"></i>Add new Pharmacy</a>
+    <a href="{{route('pharmacies.create')}}" class="btn btn-info float-right"></i>Add new Pharmacy</a>
 </div>
 <div class="container">
     <div class="row">

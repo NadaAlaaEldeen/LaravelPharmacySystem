@@ -17,10 +17,10 @@
 @endif
 
 <div class="card-header mb-5">
-    <h3 class=" text-center">Create New Medicine</h3>
+    <h3 class=" text-center">Create New Pharmacy</h3>
 </div>
 <div class="d-flex justify-content-center ">
-    <form action="{{route('pharmacy.store')}}" method="post" enctype="multipart/form-data" class="p-5 shadow-sm" style="width:70%">
+    <form action="{{route('pharmacies.store')}}" method="post" enctype="multipart/form-data" class="p-5 shadow-sm" style="width:70%">
         @csrf
         
         <div class="mb-3">
@@ -67,7 +67,7 @@
             </div>      
             <div class="form-group col-md-6">
                 <label>Avatar Image</label>
-                <input class="form-control form-control" id="formFileLg" name="image" type="file">
+                <input class="form-control form-control" id="formFileLg" name="avatar" type="file">
             </div>
         </div>
         

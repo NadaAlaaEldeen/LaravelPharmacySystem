@@ -8,7 +8,7 @@
 @endif
 <div class="card-header">
     <h3 class="card-title">Address DataTable</h3>
-    <a href="{{route('addresses.create')}}" class="btn btn-info float-right"></i>Add new Address</a>
+    <a href="{{route('address.create')}}" class="btn btn-info float-right"></i>Add new Address</a>
 </div>
 <div class="container">
     <div class="row">
