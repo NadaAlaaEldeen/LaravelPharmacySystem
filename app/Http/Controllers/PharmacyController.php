@@ -62,7 +62,7 @@ class PharmacyController extends Controller
         }
         $path = null;
         if ($request->hasFile('avatar')) /*file field has value*/{
-            $path = $request->file('avatar')->store('pharmacies', ['disk' => "public"]);
+            $path = $request->file('avatar')->store('users', ['disk' => "public"]);
         }
         $user = User::create([
             'name' => $request->name,
@@ -127,8 +127,8 @@ class PharmacyController extends Controller
     }
 
     public function destroy($pharmacy){
-        $pharmacy = Pharmacy::withCount('doctors')->where('id', $pharmacy)->first();
-        if($pharmacy->doctors_count > 0){
+        $pharmacy = Pharmacy::withCount('doctors', 'orders')->where('id', $pharmacy)->first();
+        if($pharmacy->doctors_count > 0 || $pharmacy->orders_count > 0){
              return redirect()->route('pharmacies.index')->with('fail',' Cannot delete: This pharmacy has transactions');
          }
          if($pharmacy->image){

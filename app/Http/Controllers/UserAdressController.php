@@ -75,13 +75,13 @@ class UserAdressController extends Controller
                 $address->flat_number= $request->flat_number,
                 $address->area_id= $request->area_id
               ]);
-         return view('Address.index')->with('success', 'A Address is Updated Successfully!');
+         return view('Address.index')->with('success', 'An Address is Updated Successfully!');
     }
 
     public function destroy($address){
         $address = Address::withCount('order')->where('id', $address)->first();
         if($address->order_count > 0){
-             return redirect()->route('addresses.index')->with('success',' Cannot delete: this address has transactions');
+             return redirect()->route('addresses.index')->with('fail',' Cannot delete: this address has transactions');
          }
         $address->delete();
         return redirect()->route('addresses.index');

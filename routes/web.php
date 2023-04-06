@@ -32,6 +32,13 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/pharmacies/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class,"store"])->name("users.store");
+    Route::get('/users/{user}', [UserController::class,'show'])->name('users.show');
+    Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}',[UserController::class , 'update'])->name('users.update');
+    Route::get('/users/delete/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
 
     Route::resource('areas', AreaController::class);
     Route::get('/areas/delete/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');

@@ -85,5 +85,3 @@
 
 @endsection
 
-
-<!-- <input type="text" value="{{$pharmacy->user->name}}" class="form-control @error('priority') is-invalid @enderror" -->
