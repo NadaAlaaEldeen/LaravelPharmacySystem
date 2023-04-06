@@ -20,10 +20,9 @@ use App\Http\Controllers\UserOrderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('index');
-})->middleware(['auth']);
+})->middleware(['auth', 'role:admin|pharmacy|doctor']);
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
@@ -51,19 +50,16 @@ Route::group(["middleware" => ['role:admin|pharmacy']], function () {
 });
 // ------------------------------------------------------------------------------------------
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'client']);
 Auth::routes(['register' => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('stripe', [StripeController::class, 'stripe'])->name('stripe');
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 // ------------------------------Medicines routes---------------------------------------//
-Route::group(["middleware" => ['role:admin|pharmacy|doctor']], function () {
-    Route::resource('medicines', MedicineController::class);
+Route::resource('medicines', MedicineController::class);
 Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
-});
 //----------------------------------Doctors Routes----------------------------------------//
 Route::get('/doctors', [App\Http\Controllers\DoctorController::class, 'index'])->name('doctor');
 Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
