@@ -31,23 +31,13 @@ class UserAdressController extends Controller
         return view('Address/index');
     }
 
-
-
     public function create()
     {
-        //$doctors = Medicine::all();
-         //dd($doctors);
-
-        return view('address.create');
-
+        return view('Address.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //dd($request);
         $address= Address::create([
             'street_name' => $request->street_name,
             'building_number' => $request->building_number,
@@ -63,31 +53,13 @@ class UserAdressController extends Controller
         return to_route('address');
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  */
-
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
     public function edit($address){
-        //dd($user_id);
-        //$users = User::all();
         $address = Address::find($address);
-        //dd($address);
         return view('address.edit', ['address' => $address]);
     }
-    /**
-     * Update the specified resource in storage.
-     */
-
+    
     public function update(Request $request, $address){
-        //dd($request);
         $address = Address::find($address);
-        //$d = $request->name;
-        //dd($d);
-
          $address->update(
             [
                 //column name -> came data of name of input
@@ -98,20 +70,12 @@ class UserAdressController extends Controller
                 $address->flat_number= $request->flat_number,
                 $address->area_id= $request->area_id
               ]);
-        //dd($doctor->name);
          return view('address.create')->with('success', 'A Address is Updated Successfully!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-
     public function destroy($address){
         $address = Address::withCount('order')->where('id', $address)->first();
-        //dd($address);
         if($address->order_count > 0){
-            // return response()->json(['error' => 'something went wrong'], 400);it related to another tables
              return redirect()->route('address')->with('success',' Cannot delete: this address has transactions');
          }
         $address->delete();

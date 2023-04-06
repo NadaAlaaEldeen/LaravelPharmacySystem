@@ -25,15 +25,13 @@ class AreaController extends Controller
                 ->make(true);
         }
 
-        return view('Areas/index');
+        return view('Areas.index');
     }
-
-
 
 
     public function create()
     {
-        return view('areas.create');
+        return view('Areas.create');
     }
 
     /**
@@ -46,7 +44,7 @@ class AreaController extends Controller
             'address' => $request->address,
         ]);
 
-        return to_route('areas');
+        return redirect()->route('areas.index');
     }
 
     /**
@@ -79,7 +77,7 @@ class AreaController extends Controller
                 $area->created_at = $request->created_at,
                 $area->updated_at= $request->updated_at
              ]);
-         return view('areas.index')->with('success', 'A Medicine is Updated Successfully!');
+         return redirect()->route('areas.index')->with('success', 'A Medicine is Updated Successfully!');
     }
 
 
@@ -91,9 +89,9 @@ class AreaController extends Controller
         $area = Area::withCount('addresses','pharmacies' )->where('id', $area)->first();
         
         if($area->addresses_count > 0 || $area->pharmacies_count > 0){
-            return redirect()->route('areas')->with('fail',' Cannot delete: This area has transactions');
+            return redirect()->route('areas.index')->with('fail',' Cannot delete: This area has transactions');
         }
         $area->delete();
-        return redirect()->route('areas');
+        return redirect()->route('areas.index');
     }
 }
