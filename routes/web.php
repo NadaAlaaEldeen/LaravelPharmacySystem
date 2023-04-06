@@ -76,7 +76,7 @@ Route::put('/doctors/{doctor}',[DoctorController::class , 'update'])->name('doct
 Route::get('/doctors/delete/{doctor}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
 
 //----------------------------------Orders Routes----------------------------------------//
-Route::get('/order', [App\Http\Controllers\UserOrderController::class, 'index'])->name('orders');
+Route::get('/orders', [UserOrderController::class, 'index'])->name('orders.index');
 Route::get('/order/create', [UserOrderController::class, 'create'])->name('orders.create');
 Route::post('/order', [UserOrderController::class,'store'])->name("orders.store");
 Route::get('/order/edit/{order}', [UserOrderController::class, 'edit'])->name('orders.edit');
