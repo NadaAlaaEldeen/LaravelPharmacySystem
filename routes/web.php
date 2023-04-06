@@ -31,13 +31,13 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/pharmacies', [PharmacyController::class,"store"])->name("pharmacies.store");
     Route::get('/pharmacies/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
 
-    
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/addresses', [UserAdressController::class, 'index'])->name('addresses.index');
-    Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
 
     Route::resource('areas', AreaController::class);
     Route::get('/areas/delete/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
+
+    Route::resource('addresses', UserAdressController::class);
+    Route::get('/addresses/delete/{address}', [UserAdressController::class, 'destroy'])->name('addresses.destroy');
 });
 
 // ---------------------admin or pharmacy restriction on pharmcy-------------------
@@ -65,15 +65,6 @@ Route::post('/medicines', [MedicineController::class,"store"])->name("medicines.
 Route::get('/medicines/edit/{medicine}', [MedicineController::class, 'edit'])->name('medicines.edit');
 Route::put('/medicines/{medicine}',[MedicineController::class , 'update'])->name('medicines.update');
 Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
-
-//----------------------------------Addresses Routes----------------------------------------//
-Route::get('/addresses', [App\Http\Controllers\UserAdressController::class, 'index'])->name('addresses.index');
-Route::get('/address/create', [UserAdressController::class, 'create'])->name('addresses.create');
-Route::post('/addresses', [UserAdressController::class,'store'])->name("addresses.store");
-Route::get('/addresses/{address}', [PharmacyController::class,'show'])->name('addresses.show');
-Route::get('/addresses/edit/{address}', [UserAdressController::class, 'edit'])->name('addresses.edit');
-Route::put('/addresses/{address}',[UserAdressController::class , 'update'])->name('addresses.update');
-Route::get('/addresses/delete/{address}', [UserAdressController::class, 'destroy'])->name('addresses.destroy');
 
 //----------------------------------Doctors Routes----------------------------------------//
 Route::get('/doctors', [App\Http\Controllers\DoctorController::class, 'index'])->name('doctor');

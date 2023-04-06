@@ -30,9 +30,12 @@ Create Area
                 <input name="flat_number" type="number" min="1" class="form-control" id="exampleFormControlInput2" placeholder="Flat_Num">
             </div>
         </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Is_Main</label>
-            <input name="is_main" type="text" class="form-control" id="exampleFormControlInput2">
+        <div class="form-group">
+            <label for="price">Is_Main:</label><br>
+            <input type="radio"  name="is_main" value="0">
+            <label for="age1">No</label><br>
+            <input type="radio" name="is_main" value="1">
+            <label for="age2">Yes</label><br> 
         </div>
         <div class="form-group d-flex">
         <div class="mb-3 col-md-6">
