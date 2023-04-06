@@ -82,7 +82,7 @@ class PharmacyController extends Controller
             'owner_user_id' => $user->id,
             'area_id' => $request->area_id,
         ]);
-        return redirect()->route('pharmacies.index');
+        return redirect()->route('pharmacies.index')->with('success', 'A New Pharmacy is created Successfully!');
     }
 
     public function edit($pharmacy){
@@ -131,8 +131,8 @@ class PharmacyController extends Controller
         if($pharmacy->doctors_count > 0){
              return redirect()->route('pharmacies.index')->with('fail',' Cannot delete: This pharmacy has transactions');
          }
-         if($post->image){
-            Storage::disk("public")->delete($post->image);
+         if($pharmacy->image){
+            Storage::disk("public")->delete($pharmacy->avatar);
         }
         $pharmacy->delete();
         return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Deleted Successfully!');

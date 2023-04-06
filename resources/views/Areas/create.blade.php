@@ -5,7 +5,15 @@ Create Area
 @endsection
 
 @section('content')
-
+@if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+@endif
 <div class="d-flex justify-content-center">
     <form action="{{route("areas.store")}}" method="post" enctype="multipart/form-data" style="width: 600px;">
         @csrf
