@@ -13,6 +13,7 @@ class Area extends Model
     [
         'name',
         'address',
+        'country_id'
     ];
 
     public function addresses() {
@@ -23,4 +24,9 @@ class Area extends Model
        {
            return $this->hasMany(Pharmacy::class,'id');
        }
+
+       public function country(){
+
+        return $this->belongsTo(Country::class,'country_id');
+    }
 }
