@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreClientRequest;
+use Illuminate\Support\Facades\Storage;
 
 use DataTables;
 
