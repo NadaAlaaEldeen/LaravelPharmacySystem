@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
 use DataTables;
+use App\Http\Controllers\UserController;
 
 
 class DoctorController extends Controller
@@ -24,7 +25,7 @@ class DoctorController extends Controller
                   $btn .= '<form action="' . route('doctors.unban', $row->id) .'" method="POST">
                         ' . csrf_field() . '
                         <input type="hidden" name="_method" value="POST">
-                        <button type="submit" class="btn btn-warning btn-sm mx-2 ">UnBan</button>
+                        <button type="submit" class="btn btn-warning btn-sm mx-2 my-3 ">UnBan</button>
                     </form>
                 ';
                      
@@ -33,7 +34,7 @@ class DoctorController extends Controller
                     <form action="' . route('doctors.ban', $row->id) .'" method="POST">
                         ' . csrf_field() . '
                         <input type="hidden" name="_method" value="POST">
-                        <button type="submit" class="btn btn-warning btn-sm mx-2">Ban</button>
+                        <button type="submit" class="btn btn-warning btn-sm mx-2 my-3">Ban</button>
                     </form>
                 ';
                 }
@@ -56,16 +57,18 @@ public function ban($id)
     $doctor = Doctor::find($id);
     $doctor->is_ban = true;
     $doctor->save();
-    $banned = $doctor->ban();
-    return view('doctor/index')->with('banned', $banned);;
+    UserController::updateStatus($id,0);
+    return view('Doctor/index');
+
 }
 
-public function unban($id)
+public function unban(UserController $userController,$id)
 {
     $doctor = Doctor::find($id);
     $doctor->is_ban = false;
-    $unbanned = $doctor->unban();
     $doctor->save();
-    return view('doctor/index')->with('banned', $unbanned);;
+    $userController->updateStatus($doctor->user_id,1);
+    return view('Doctor/index');
 }
+
 }

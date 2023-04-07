@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use DataTables;
@@ -31,4 +32,19 @@ class UserController extends Controller
 
         return view('users/index');
     }
+      
+    public static function updateStatus($id, $status_code)
+    {    
+                         
+              $user=User::whereId($id)->update([
+               'status' =>$status_code
+              ]);
+              
+            if($user)
+            return redirect()->route('doctors.index')->with('success','User Status Updated');
+            
+            return redirect()->route('doctors.index')->with('error','failed to update status');
+        }
+        
+    
 }

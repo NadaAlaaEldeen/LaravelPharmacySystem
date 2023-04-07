@@ -92,4 +92,6 @@ Route::post('/doctors/{id}/ban',[DoctorController::class, 'ban'])->name('doctors
 Route::post('/doctors/{id}/unban',[DoctorController::class, 'unban'])->name('doctors.unban');
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
 
-
+//------------------------------Users Routes----------------------
+Route::get('/users/status/{id}/{status_code}',[UserController::class ,'updateStatus'])->name('users.status.update');
+ 

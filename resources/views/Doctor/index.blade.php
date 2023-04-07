@@ -29,7 +29,8 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('doctors.index') }}",
-            columns: [{
+            columns: [
+                {
                     data: 'id',
                     name: 'id'
                 },
@@ -43,7 +44,10 @@
                 },
                 {
                     data: 'created_at',
-                    name: 'created_at'
+                    name: 'created_at',
+                    render: function(data, type, full, meta) {
+                        return moment(data).format('YYYY-MM-DD');
+                    }
                 },
                 {
                     data: 'is_ban',
@@ -59,5 +63,6 @@
         });
     });
 </script>
+
 
 @endsection

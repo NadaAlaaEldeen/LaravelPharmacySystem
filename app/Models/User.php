@@ -11,6 +11,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Cashier\Billable;
 use App\Notifications\greetingNotification;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\UserController;
+
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -32,7 +34,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'gender',
         'birth_day',
         'mobile',
-        'email_verified_at'
+        'email_verified_at',
+        'status',
+        'banned_at'
     ];
 
     /**

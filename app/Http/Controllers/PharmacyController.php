@@ -113,6 +113,7 @@ class PharmacyController extends Controller
 
     public function restoreOne($id){
         $item = Pharmacy::withTrashed()->find($id);
+        $item->restore();
         return view('Pharmacy/index');
        
     }
