@@ -1,10 +1,17 @@
 @extends('layouts.container')
 
 @section('content')
-<div class="card-header">
+@if(session('success'))
+    <div class="col-lg-12">
+        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+    </div>
+@endif
+<div class="card-header mb-5">
     <h3 class="card-title">Doctors DataTable</h3>
-    <a href="{{route('Doctor.create')}}" class="btn btn-info float-right"></i>Add new Doctor</a>
+    <a href="{{route('doctors.create')}}" class="btn btn-info float-right"></i>Add new Doctor</a>
 </div>
+
+@if (auth()->user()->hasRole("admin"))
 <div class="container">
     <div class="row">
         <div class="col-12 table-responsive">
@@ -19,12 +26,49 @@
                     <th>Action</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
+@else (auth()->user()->hasRole(["pharmacy"]))
+<table class="table mt-4 user_datatable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Doctor Name</th>
+            <th>Pharmacy Name</th>
+            <th>Ban</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+                @foreach($doctors as $doctor)
+                    @if($pharmacy->id == $doctor->pharmacy_id)
+                    <tr class="align-items-baseline">
+                        <td>{{$doctor->id}}</td>
+                        <td>{{$doctor->pharmacy->name}}</td>
+                        <td>{{$doctor->pharmacy->name}}</td>
+                        <td>{{$doctor->is_ban}}</td>
+                        <td>
+                        <a href="{{route('doctors.edit', $doctor->id)}}" class="btn btn-primary">Edit</a>
+                        <a href="{{route('doctors.destroy', $doctor->id)}}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    @endif
+                @endforeach
+            
+        </tbody>
+    </table>
+@endif 
+
 @endsection
+
+
+
+
+
 
 @section('scripts')
 <script type="text/javascript">
@@ -63,5 +107,5 @@
         });
     });
 </script>
-
 @endsection
+

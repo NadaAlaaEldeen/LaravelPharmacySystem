@@ -12,9 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('assign:orders-to-pharmacy')->everyMinute();
         // $schedule->command('inspire')->hourly();
         $schedule->command('notify:users-not-logged-in-for-month')->daily();
+        $schedule->command('assign:orders-to-pharmacy')->everyMinute();
     }
 
     /**
@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

@@ -103,7 +103,7 @@ class PharmacyController extends Controller
                 {
                     Storage::disk("public")->delete($pharmacy->user->avatar);
                 }
-            $path = $request->file('avatar')->store('pharmacies', ['disk' => "public"]);
+            $path = $request->file('avatar')->store('users', ['disk' => "public"]);
         }
         else
         {

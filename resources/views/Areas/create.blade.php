@@ -17,10 +17,17 @@ Create Area
 <div class="d-flex justify-content-center">
     <form action="{{route("areas.store")}}" method="post" enctype="multipart/form-data" style="width: 600px;">
         @csrf
+        <div class="mb-3 ">
+                <label for="exampleFormControlTextarea1" class="form-label">Country Name</label>
+                <select name="country_id" class="form-control">
+                    @foreach($countries as $country)
+                            <option value="{{$country->id}}">{{$country->capital}}</option>
+                    @endforeach
+                </select>
+        </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Name</label>
+            <label for="exampleFormControlTextarea1" class="form-label">Area Name</label>
             <input name="name" type="text" class="form-control" id="exampleFormControlInput1">
-
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">address</label>

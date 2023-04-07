@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Country</th>
                         <th>Name</th>
                         <th>Address</th>
                         <th>Action</th>
@@ -45,6 +46,10 @@ $(function() {
         columns: [{
                 data: 'id',
                 name: 'id'
+            },
+            {
+                data: 'country',
+                name: 'country'
             },
             {
                 data: 'name',

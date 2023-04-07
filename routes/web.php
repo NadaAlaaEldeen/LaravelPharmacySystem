@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 // ---------------------admin or pharmacy restriction on pharmcy-------------------
 Route::group(["middleware" => ['role:admin|pharmacy']], function () {
-   
+
     Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
     Route::get('/pharmacies/{pharmacy}', [PharmacyController::class,'show'])->name('pharmacies.show');
     Route::get('/pharmacies/edit/{pharmacy}', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
@@ -61,7 +61,7 @@ Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.pos
 Route::resource('medicines', MedicineController::class);
 Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 //----------------------------------Doctors Routes----------------------------------------//
-Route::get('/doctors', [App\Http\Controllers\DoctorController::class, 'index'])->name('doctor');
+Route::get('/doctor', [DoctorController::class, 'index'])->name('doctors.index');
 Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
 Route::post('/doctors', [DoctorController::class,"store"])->name("doctors.store");
 Route::get('/doctors/{doctor}', [DoctorController::class,'show'])->name('doctors.show');

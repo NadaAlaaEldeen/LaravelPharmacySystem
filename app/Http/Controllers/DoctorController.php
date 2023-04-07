@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDoctorRequest;
+use App\Http\Requests\StoreUsersPostRequest;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
@@ -15,13 +15,14 @@ class DoctorController extends Controller
     public function index(Request $request)
     {
 
+        
         if ($request->ajax()) {
             $data = Doctor::select('id', 'is_ban', 'user_id', 'pharmacy_id', 'created_at')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' .route('Doctor.show', $row->id).'" class="btn btn-success btn-sm mx-2">View</a>';
-                    $btn .= '<a href="' . route('Doctor.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
-                    $btn .= '<a href="' .route('Doctor.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
+                    $btn = '<a href="' .route('doctors.show', $row->id).'" class="btn btn-success btn-sm mx-2">View</a>';
+                    $btn .= '<a href="' . route('doctors.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
+                    $btn .= '<a href="' .route('doctors.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
                     return $btn;
                 })->addColumn('Name',function(Doctor $doctor){
                     return $doctor->user->name;
@@ -31,22 +32,22 @@ class DoctorController extends Controller
                 ->rawColumns(['action', 'Name', 'pharmacy'])
                 ->make(true);
         }
-
-        return view('Doctor/index');
+        if (auth()->user()->hasRole(["pharmacy"])) 
+        {
+            $pharmacy = Pharmacy::where('owner_user_id', auth()->user()->id)->first();
+            $doctors = Doctor::all();
+            return view("doctors/index", ["pharmacy" => $pharmacy],['doctors' => $doctors]);
+        }
+        return view('doctors/index');
     }
 
 
 
      public function create()
     {
-        // $doctors = Doctor::all();
-        //  //dd($doctors);
-
-        // return view('Doctor.create', $doctors->id);
+        $doctor = Doctor::all();
         $pharmacies = Pharmacy::all();
-        //dd($pharmacies);
-        return view('Doctor.create',['pharmacies' => $pharmacies]);
-
+        return view('doctors.create', ['pharmacies' => $pharmacies]);
     }
 
     /**
@@ -54,37 +55,45 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $user = new User([
             'name'=>$request ->input('name'),
             'email'=>$request ->input('email'),
-            'password'=>$request ->input('password')
-              ]);
-        if ($request->hasFile('image')) {
-            $image = $request->file('image')->store('doctors', ['disk' => "public"]);
-            $user->avatar= $image;
-        }
+            'national_id' => $request->input('national_id'),
+            'gender' => $request->gender,
+            'mobile' => $request->phone,
+            'birth_day'=> $request->date_of_birth,
+            ]);
+            if ($request->input('password')) {
+            $user->password = bcrypt($request->input('password'));
+            }
 
+            if($request->hasFile('avatar')){
 
-        $doctors = $request()->all();
+                $avatar=request()->file('avatar');
+                $filename=time().$request->file('avatar')->getClientOriginalName();
+                $path = $request->file('avatar')->storeAs('images', $filename, 'public');
+                $avatar = '/storage/'.$path;
+                $user->avatar= $filename;
+            }
+            $user->avatar= $avatar;
+            $user->save();
+            if (auth()->user()->hasRole(["pharmacy"])) 
+            { 
+                $pharmacy = Pharmacy::where('owner_user_id', auth()->user()->id)->first();
+                $parmacy_id = $pharmacy->id;
+            }
+            else 
+            {
+                $parmacy_id = $request->input('pharmacy_id');
+            }
+        $doctor=new Doctor([
+            'pharmacy_id' => $parmacy_id,
+            'is_ban' => $request->input('is_ban'),
+            'user_id' => $user->id,
+        ]);
 
-
-
-         $doctors->create(
-            [
-                //column name -> came data of name of input
-                $doctors->name => $request->name,
-                $doctors->email => $request->Email,
-                $doctors->password => $request->password,
-                //$doctors->avatar = $request->$path,
-                 $doctors->National_id=> $request->National_id
-                // 'pharmacy_id' => $request->Password
-             ]);
-
-
-             $doctors->save();
-             $user->save();
-        return to_route(route:'doctor');
+            $doctor->save();
+            return redirect()->route('doctors.index')->with('success',' Doctor Created Successfully!');
     }
 
     /**
@@ -93,66 +102,62 @@ class DoctorController extends Controller
     public function show($doctor)
     {
         $users = User::all();
-        $post = User::find($doctor);
-        //dd($post->email);
-
-        return view('Doctor.show',['post' => $post]);
+        $doctor = Doctor::where('id', $doctor)->first();
+        return view('doctors.show',['doctor' => $doctor]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    // public function edit($doctor){
-    //     //dd($user_id);
-    //     $users = User::all();
-    //     $post = User::find($doctor);
-    //     //dd($post);
-    //     return view('doctors.edit', ['doctors' => $post,'users' => $users]);
-    // }
+    public function edit($doctor)
+    {
+        $doctor = Doctor::find($doctor);
+        return view('doctors.edit', ['doctor' => $doctor]);
+    }
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, string $id)
-    // {
-    //     //
-    // }
-    // public function update(Request $request, $doctors){
-    //     //dd($request);
-    //     $doctors = User::find($doctors);
-    //     //$d = $request->name;
-    //     //dd($d);
 
-    //      $doctors->update(
-    //         [
-    //             //column name -> came data of name of input
-    //             $doctors->name = $request->name,
-    //             $doctors->mobile = $request->phone,
-    //             $doctors->email = $request->email,
-    //             $doctors->password = $request->password,
-    //             $doctors->avatar = $request->avatar_image,
-    //              $doctors->National_id=> $request->National_id
-    //             // 'pharmacy_id' => $request->Password
-    //          ]);
-    //     //dd($doctor->name);
-    //      return view('doctors.create')->with('success', 'A Post is Updated Successfully!');
-    // }
+    public function update(Request $request, $doctor){
+
+        $doctor = Doctor::find($doctor);
+        $user = User::find($doctor->user->id);
+        $doctor->is_ban= $request->input('is_ban');
+        $doctor->save();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->national_id = $request->input('national_id');
+
+        if($request->hasFile('avatar')){
+
+                $avatar=request()->file('avatar');
+                $filename=time().$request->file('avatar')->getClientOriginalName();
+                $path = $request->file('avatar')->storeAs('images', $filename, 'public');
+                $avatar = '/storage/'.$path;
+                $user->avatar= $filename;
+            }
+            $user->avatar= $avatar;
+
+
+        $user->save();
+        return redirect()->route('doctors.index')->with('success','A Doctor Updated Successfully!');
+    }
 
 
     /**
      * Remove the specified resource from storage.
      */
 
-    // public function destroy($doctor){
-    //     $doctor1 = User::where('id', $doctor)->first();
-    //     //dd($doctor1->email);
-    //     //dd($doctor1);
-    //     //$doctor2 = User::where('id', $doctor)->first();
-    //     $doctor1->doctors->where('user_id', $doctor)->delete();
-    //     //$doctor1->delete();
-    //     //return redirect()->route('doctors.index', $doctor['user_id'] );
-    //     return "hi";
-    //     //dd($doctor);
-    // }
+    public function destroy($doctor){
+    $doctor = Doctor::withCount('order')->where('id',$doctor)->first();
+    $user = User::findOrFail($doctor->user_id);
+    if($doctor->order_count > 0){
+        return redirect()->route('doctors.index')->with('success',' Cannot delete: the doctor has transactions');
+    }
+    $doctor->delete();
+    $user->delete();
+    return redirect()->route('doctors.index')->with('success',' Doctor Deleted Successfully!');
+    }
 
 }
 
