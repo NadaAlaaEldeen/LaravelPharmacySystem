@@ -85,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function pharmacy()
     {
-        return $this->hasOne(Pharmacy::class, "id");
+        return $this->hasOne(Pharmacy::class, 'owner_user_id', "id");
     }
 
     public function typeable()

@@ -24,19 +24,22 @@
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
           @role('pharmacy')
-            <a href="{{route('pharmacies.index')}}" class="nav-link">
+          <a href="{{route('pharmacies.index')}}" class="nav-link {{Route::is('pharmacies.show') ? 'active' : '' }}">
+          <img src="{{asset("dist/img/images/pharmacyicon.png")}}" class="nav-icon">
+            <p>
+               Pharmacy
+            </p>
             @else
             @role('admin')
             <a href="{{route('pharmacies.index')}}" class="nav-link">
-            @else
-            <a href="#" class="nav-link">
-            @endrole
-            @endrole
             <img src="{{asset("dist/img/images/pharmacyicon.png")}}" class="nav-icon">
             <p>
-                            @role("admin") Pharmacies @endrole
-                            @role("pharmacy") Pharmacy @endrole
+               Pharmacies
               </p>
+            @endrole
+            @endrole
+
+
             </a>
         </li>
       @endrole
@@ -44,7 +47,7 @@
     <!-- doctors menu -->
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
-          <a href="{{route('doctors.index')}}" class="nav-link">
+          <a href="{{url('doctor')}}" class="nav-link">
             <img src="{{asset("dist/img/images/doctorsicon.png")}}" class="nav-icon">
             <p>
               Doctors

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePharmacyRequest extends FormRequest
+class StoreClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,9 +30,6 @@ class StorePharmacyRequest extends FormRequest
             'gender' => ["required"],
             'mobile' => ["required", "digits:11"],
             'date_of_birth' => ["required", "date"],
-            'name' => ["required", "max:255"],
-            'area_id' => ["required"],
-            'priority' => ["required","min:1"]
         ];
     }
 }

@@ -1,96 +1,87 @@
-@extends("layouts.container")
+@extends('layouts.container')
 
-@section("title","Edit Pharmacy")
+@section('content')
+@if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+@endif
 
-@section("style")
-
-@endsection
-
-@section("header","Edit Pharmacy")
-
-@section("breadcrumb")
-
-
-@endsection
-
-@section("content")
 <div class="d-flex justify-content-center">
-    <!-- <div class="col-md-6" style="width: 440px;">
-        <img src="Doctors_For_Men-732x549-thumbnail.jpg" >
-    </div> -->
     <div class="card card-primary shadow border rounded p-4 mb-5 " style="width: 850px;">
         <div class="card-header d-flex justify-content-center">
             <h3 class="card-title">Edit Pharmacy</h3>
         </div>
-        <!-- /.card-header -->
-        <!-- form start -->
         <div class="d-flex justify-content-center">
-        <form action="{{route("pharmacy.update",$pharmacy->id)}}" method="post" enctype="multipart/form-data" style="width: 800px;">
-            <div class="card-body row g-3">
-                @csrf
-                @method("put")
+            <form action="{{route("pharmacies.update",$pharmacy->id)}}" method="post" enctype="multipart/form-data"style="width: 800px;">
+                <div class="card-body row g-3">
+                    @csrf
+                    @method("put")
+                    <div class="form-group col-md-6">
+                    <label for="priority">Owner Name</label>
+                    <input type="text" value="{{$pharmacy->user->name}}" class="form-control"
+                           name="user_name" >
+                    </div>
+                    <div class="form-group col-md-6">
+                    <label for="priority">Owner Email</label>
+                    <input type="text" value="{{$pharmacy->user->email}}" class="form-control"
+                           name="user_mail" >
+                    </div>
+                    <div class="form-group col-md-6">
+                    <label for="priority">Pharmacy Name</label>
+                    <input type="text" value="{{$pharmacy->name}}" class="form-control" name="name">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Avatar Image</label><br>
+                        @if ($pharmacy->user->avatar) 
+                        <img src="{{asset('storage/'.$pharmacy->user->avatar)}}"  alt="photo" style="height:30%;width:20%"> <br><br> 
+                        @else
+                        <p>No provided image</p>
+                        @endif
+                        <input class="form-control form-control-lg" id="formFileLg" name="avatar" type="file">
+                    </div>
+            
+                @role('admin')
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Area_ID</label>
+                    <select name="area_id" class="form-control">
+                        <option value="{{$pharmacy->area_id}}">{{$pharmacy->area_id}}</option>
+                        @foreach($areas as $area)
+                            <option value="{{$area->id}}">{{$area->id}}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-group col-md-6">
-                    <label for="priority">Name</label>
-                    <input type="text" value="{{$pharmacy->name}}" class="form-control @error('priority') is-invalid @enderror"
-                           name="name" id="priority"
-                           placeholder="Enter priority">
+                        <label for="priority">Priority</label>
+                        <input type="text" value="{{$pharmacy->priority}}" class="form-control "
+                           name="priority" id="priority">
+                    </div>
+                @endrole
+
+                @role('pharmacy')
+                <div class="form-group col-md-6">
+                    <label for="priority">Area_ID</label>
+                    <input type="text" name="area_id" value="{{$pharmacy->area_id}}" class="form-control" readonly>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="priority">Priority</label>
-                    <input type="text" value="{{$pharmacy->priority}}" class="form-control @error('priority') is-invalid @enderror"
-                           name="priority" id="priority"
-                           placeholder="Enter priority">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="type">Owner</label>
-                    <input type="text" value="{{$pharmacy->owner_user_id}}"
-                           class="form-control @error('owner') is-invalid @enderror" name="owner" id="owner"
-                           placeholder="Enter ower">
+                    <input type="text" name="priority" value="{{$pharmacy->priority}}" class="form-control readon;" readonly>
+                    </div>    
+                @endrole
 
-                </div>
-                <div class="form-group">
-                    <label for="national-id">Area_id</label>
-                    <input type="text" value="{{$pharmacy->area_id}}"
-                    class="form-control @error('area_id') is-invalid @enderror" name="area_id"
-                           id="area_id"
-                           placeholder="Enter area">
-
-
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="price">Created_at</label>
-                    <input type="text" class="form-control @error('created_at') is-invalid @enderror" name="created_at"
-                           id="created_at" value="{{$pharmacy->created_at}}"
-                           placeholder="Enter created date">
-
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Updated_at</label>
-                    <input type="text" value="{{$pharmacy->updated_at}}"
-                           class="form-control @error('updated_at') is-invalid @enderror" name="updated_at" id="updated_at"
-                           placeholder="Enter updated date">
-
-                </div>
-
-                </div>
-
+                    <br>
+                    <div class="card-footer d-flex justify-content-end" style="width: 800px;">
+                        <button type="submit" class="btn btn-primary">update</button>
                     </div>
-
                 </div>
-
-
-            </div>
-            <br>
-            <!-- /.card-body -->
-
-            <div class="card-footer d-flex justify-content-end" style="width: 800px;">
-                <button type="submit" class="btn btn-primary">update</button>
-            </div>
-
-        </form>
-    </div>
+            </form>
+        </div>
     </div>
 </div>
 
 @endsection
+

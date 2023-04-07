@@ -29,21 +29,30 @@
                 <div class="form-group col-md-6">
                     <label for="price">Created_at</label>
                     <input type="text" class="form-control @error('created_at') is-invalid @enderror" name="created_at"
-                        id="created_at" value="{{$area->created_at}}"
-                        placeholder="Enter created date">
+                           id="created_at" value="{{$area->created_at}}"
+                           placeholder="Enter created date">
+
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Updated_at</label>
                     <input type="text" value="{{$area->updated_at}}"
-                        class="form-control @error('updated_at') is-invalid @enderror" name="updated_at" id="updated_at"
-                        placeholder="Enter updated date">
+                           class="form-control @error('updated_at') is-invalid @enderror" name="updated_at" id="updated_at"
+                           placeholder="Enter updated date">
+
                 </div>
+
+                </div>
+
+                    </div>
+
+                </div>
+
+
             </div>
-            </div>
-        </div>
-        </div>
-        <br>
+            <br>
+            <!-- /.card-body -->
+
             <div class="card-footer d-flex justify-content-end" style="width: 800px;">
                 <button type="submit" class="btn btn-primary">update</button>
             </div>

@@ -6,7 +6,7 @@
         <div class="alert alert-success" role="alert">{{ session('success') }}</div>
     </div>
 @endif
-<div class="card-header">
+<div class="card-header mb-5">
     <h3 class="card-title">Orders DataTable</h3>
     <a href="{{route('orders.create')}}" class="btn btn-info float-right"></i>Add new Order</a>
 </div>
@@ -19,9 +19,8 @@
                         <th>ID</th>
                         <th>Status</th>
                         <th>Total Price</th>
-                        <th>User Name</th>
                         <th>Doctor Name</th>
-                        <th>Doctor Name</th>
+                        <th>Pharmacy Name</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -44,25 +43,20 @@
                     name: 'id'
                 },
                 {
-                    data: 'medicine',
-                    name: 'medicine'
-                },
-                {
                     data: 'status',
                     name: 'status'
                 },
                 {
-                    data: 'is_insured',
-                    name: 'is_insured'
-                },
-
-                {
-                    data: 'user_id',
-                    name: 'user_id'
+                    data: 'total_price',
+                    name: 'total_price'
                 },
                 {
-                    data: 'pharmacy',
-                    name: 'pharmacy'
+                    data: 'doctor',
+                    name: 'doctor'
+                },
+                {
+                    data: 'pharmacy_name',
+                    name: 'pharmacy_name'
                 },
                 {
                     data: 'action',

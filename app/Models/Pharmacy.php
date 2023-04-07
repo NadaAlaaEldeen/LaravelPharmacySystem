@@ -24,7 +24,7 @@ class Pharmacy extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'owner_user_id');
+        return $this->belongsTo(User::class, 'owner_user_id', "id");
     }
 
     public function type()

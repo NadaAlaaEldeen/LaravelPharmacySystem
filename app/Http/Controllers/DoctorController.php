@@ -19,9 +19,9 @@ class DoctorController extends Controller
             $data = Doctor::select('id', 'is_ban', 'user_id', 'pharmacy_id', 'created_at')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' .route('doctor.show', $row->id).'" class="btn btn-success btn-sm mx-2">View</a>';
-                    $btn .= '<a href="' . route('doctor.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
-                    $btn .= '<a href="' .route('doctor.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
+                    $btn = '<a href="' .route('doctors.show', $row->id).'" class="btn btn-success btn-sm mx-2">View</a>';
+                    $btn .= '<a href="' . route('doctors.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
+                    $btn .= '<a href="' .route('doctors.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
                     return $btn;
                 })->addColumn('Name',function(Doctor $doctor){
                     return $doctor->user->name;
@@ -32,7 +32,7 @@ class DoctorController extends Controller
                 ->make(true);
         }
 
-        return view('doctor/index');
+        return view('doctors/index');
     }
 
 
@@ -40,7 +40,7 @@ class DoctorController extends Controller
      public function create()
     {
         $doctor = Doctor::all();
-        return view('doctor.create');
+        return view('doctors.create');
     }
 
     /**
@@ -52,6 +52,9 @@ class DoctorController extends Controller
             'name'=>$request ->input('name'),
             'email'=>$request ->input('email'),
             'national_id' => $request->input('national_id'),
+            'gender' => $request->gender,
+            'mobile' => $request->phone,
+            'birth_day'=> $request->date_of_birth,
             ]);
             if ($request->input('password')) {
             $user->password = bcrypt($request->input('password'));
@@ -70,11 +73,12 @@ class DoctorController extends Controller
 
         $doctor=new Doctor([
             'pharmacy_id' => $request->input('pharmacy_id'),
+            'is_ban' => $request->input('is_ban'),
             'user_id' => $user->id,
         ]);
 
             $doctor->save();
-            return redirect()->route('doctor')->with('success',' Doctor Created Successfully!');
+            return redirect()->route('doctors.index')->with('success',' Doctor Created Successfully!');
     }
 
     /**
@@ -84,7 +88,7 @@ class DoctorController extends Controller
     {
         $users = User::all();
         $doctor = Doctor::where('id', $doctor)->first();
-        return view('doctor.show',['doctor' => $doctor]);
+        return view('doctors.show',['doctor' => $doctor]);
     }
 
     /**
@@ -93,7 +97,7 @@ class DoctorController extends Controller
     public function edit($doctor)
     {
         $doctor = Doctor::find($doctor);
-        return view('doctor.edit', ['doctor' => $doctor]);
+        return view('doctors.edit', ['doctor' => $doctor]);
     }
     /**
      * Update the specified resource in storage.
@@ -118,8 +122,10 @@ class DoctorController extends Controller
                 $user->avatar= $filename;
             }
             $user->avatar= $avatar;
+
+
         $user->save();
-        return redirect()->route('doctor')->with('success','A Doctor Updated Successfully!');
+        return redirect()->route('doctors.index')->with('success','A Doctor Updated Successfully!');
     }
 
 
@@ -130,12 +136,12 @@ class DoctorController extends Controller
     public function destroy($doctor){
     $doctor = Doctor::withCount('order')->where('id',$doctor)->first();
     $user = User::findOrFail($doctor->user_id);
-    if($doctor->order_count > 0 ){
-        return redirect()->route('doctor')->with('success',' Cannot delete: the doctor has transactions');
+    if($doctor->order_count > 0){
+        return redirect()->route('doctors.index')->with('success',' Cannot delete: the doctor has transactions');
     }
     $doctor->delete();
     $user->delete();
-    return redirect()->route('doctor')->with('success',' Doctor Deleted Successfully!');
+    return redirect()->route('doctors.index')->with('success',' Doctor Deleted Successfully!');
     }
 
 }

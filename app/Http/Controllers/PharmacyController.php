@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Pharmacy;
 use App\Models\User;
+use App\Models\Area;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use DataTables;
+use App\Http\Requests\StorePharmacyRequest;
 
 class PharmacyController extends Controller
 {
     public function index(Request $request)
     {
-
+     if (auth()->user()->hasRole("admin")){
         if ($request->ajax()) {
-            $data = Pharmacy::select('id', 'priority', 'owner_user_id', 'area_id')->get();
+            $data = Pharmacy::select('id', 'priority', 'owner_user_id', 'area_id', 'name')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' .route('pharmacy.show', $row->id).'" class="btn btn-success btn-sm mx-2">View</a>';
-                    $btn .= '<a href="' . route('pharmacy.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
-                    $btn .= '<a href="' .route('pharmacy.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
+                    $btn = '<a href="' .route('pharmacies.show', $row->id).'" class="btn btn-success btn-sm mx-2">View</a>';
+                    $btn .= '<a href="' . route('pharmacies.edit', $row->id) . '" class="btn btn-primary btn-sm mx-2">Edit</a>';
+                    $btn .= '<a href="' .route('pharmacies.destroy',  $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
 
                     return $btn;
                 })->addColumn('Name',function(Pharmacy $pharmacy){
@@ -29,131 +32,110 @@ class PharmacyController extends Controller
                 ->rawColumns(['action', 'Name'])
                 ->make(true);
         }
-
         return view('Pharmacy/index');
     }
-
-
+    if (auth()->user()->hasRole(["pharmacy"])) 
+        {
+            $pharmacy = Pharmacy::where('owner_user_id', auth()->user()->id)->first();
+            return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+        }
+    }
 
     public function show($pharmacy)
     {
-        //return("hi");
-        //dd($user_id);
-        //$doctors = Doctor::find($user_id);
-        //$doctors = Doctor::where('user_id',$user_id)->get();
-        //dd($doctors);
-        //$users = User::first();
-        //dd($users);
-    //$doctors = Doctor::find($user_id);
-        //return view('doctors.show',['doctors'=>$doctors,'users' => $users]);
-
         $users = User::all();
-        $pharmacy = User::find($pharmacy);
-        //dd($post->email);
-
-        return view('pharmacy.show',['pharmacy' => $pharmacy]);
+        $pharmacy = Pharmacy::find($pharmacy);
+        
+        return view("Pharmacy.show", ["pharmacy" => $pharmacy]);
     }
-
-
 
     public function create()
     {
-        return view('pharmacy.create');
+        $areas = Area::all();
+        return view('Pharmacy.create', ['areas' => $areas]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
-
-    public function store(Request $request)
+    public function store(StorePharmacyRequest $request)
        {
-        //dd($request);
-        //$pharmacy = $request()->all();
-
-        $pharmacy= Pharmacy::create([
+        if (isset($request->password)) {
+            $request->password = bcrypt($request->password);
+        }
+        $path = null;
+        if ($request->hasFile('avatar')) /*file field has value*/{
+            $path = $request->file('avatar')->store('users', ['disk' => "public"]);
+        }
+        $user = User::create([
             'name' => $request->name,
+            'email' => $request->email,
+            'national_id' => $request->national_id,
+            'gender' => $request->gender,
+            'password' => $request->password,
+            'mobile' => $request->mobile,
+            'birth_day'=> $request->date_of_birth,
+            'avatar' => $path
+
+        ]);
+        $user->assignRole('pharmacy');
+        $pharmacy= Pharmacy::create([
+            'name' => $request->pharmacy_name,
             'priority' => $request->priority,
-            'owner_user_id' => $request->owner,
+            'owner_user_id' => $user->id,
             'area_id' => $request->area_id,
         ]);
-
-        return view('Pharmacy/index');
-        //return "hi";
+        return redirect()->route('pharmacies.index')->with('success', 'A New Pharmacy is created Successfully!');
     }
-    // public function store(StorePharmacyRequest $request)
-    // {
-    //     dd($request);
-    //     $pharmacy = $request()->all();
 
-    //      $email = request()->priority;
-    //      dd($email);
-
-
-    //      $pharmacy->creat(
-    //         [
-    //             //column name -> came data of name of input
-    //             $pharmacy->priority => $request->priority,
-    //             $pharmacy->owner_user_id => $request->Owner,
-    //             $pharmacy->area_id = $request->area_id,
-    //          ]);
-
-    //     return to_route(route:'pharmacy');
-    // }
-
-    /**
-     * Display the specified resource.
-     */
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($pharmacy){
-        //dd($pharmacy);
+
         $users = User::all();
-        //dd($pharmacy->$users->name);
+        $areas = Area::all();
         $pharmacy = Pharmacy::find($pharmacy);
-        //dd($pharmacy);
-        return view('pharmacy.edit', ['pharmacy' => $pharmacy,'users' => $users]);
+    
+        return view('Pharmacy.edit', ['pharmacy' => $pharmacy,'users' => $users],['areas' => $areas]);
     }
-    /**
-     * Update the specified resource in storage.
-     */
 
     public function update(Request $request, $pharmacy){
-
         $pharmacy = Pharmacy::find($pharmacy);
+        $user = User::find($pharmacy->owner_user_id);
+        
+        if ($request->hasFile('avatar')) /*choose file in file input*/{
+            if($pharmacy->user->avatar) //if already existed image or not
+                {
+                    Storage::disk("public")->delete($pharmacy->user->avatar);
+                }
+            $path = $request->file('avatar')->store('pharmacies', ['disk' => "public"]);
+        }
+        else
+        {
+            $path = $pharmacy->user->avatar;
+        }
+      $user->update(
+            [
+                $user->name = $request->user_name,
+                $user->email = $request->user_mail,
+                $user->avatar = $path
+             ]);
+             
          $pharmacy->update(
             [
                 $pharmacy->name  = $request->name,
                 $pharmacy->priority  = $request->priority,
-                $pharmacy->owner_user_id = $request->owner,
                 $pharmacy->area_id = $request->area_id,
-                $pharmacy->created_at = $request->created_at,
-                $pharmacy->updated_at = $request->updated_at,
              ]);
-        //dd($doctor->name);
-        return view('Pharmacy/index')->with('success', 'A Pharmacy is Updated Successfully!');
+             
+        return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Updated Successfully!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-
     public function destroy($pharmacy){
-        $pharmacy = Pharmacy::withCount('doctors')->where('id', $pharmacy)->first();
-        //dd($pharmacy);
-        if($pharmacy->doctors_count > 0){
-            // return response()->json(['error' => 'something went wrong'], 400);it related to another tables
-            //return "hi";
-            return redirect()->route('pharmacies.index')->with('success',' Cannot delete: this pharmacy has transactions');
+        $pharmacy = Pharmacy::withCount('doctors', 'orders')->where('id', $pharmacy)->first();
+        if($pharmacy->doctors_count > 0 || $pharmacy->orders_count > 0){
+             return redirect()->route('pharmacies.index')->with('fail',' Cannot delete: This pharmacy has transactions');
          }
+         if($pharmacy->image){
+            Storage::disk("public")->delete($pharmacy->avatar);
+        }
         $pharmacy->delete();
         return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Deleted Successfully!');
     }
-
-
-
-
 }
 

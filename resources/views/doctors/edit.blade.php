@@ -7,7 +7,7 @@
             <h3 class="card-title">Edit Doctor</h3>
         </div>
         <div class="d-flex justify-content-center">
-        <form action="{{route("doctor.update",$doctor->id)}}" method="post" enctype="multipart/form-data" style="width: 800px;">
+        <form action="{{route("doctors.update",$doctor->id)}}" method="post" enctype="multipart/form-data" style="width: 800px;">
             <div class="card-body row g-3">
                 @csrf
                 @method("put")
@@ -34,10 +34,14 @@
 
                 <div class="form-group">
                     <label for="date-of-birth">is ban</label>
-                    <input type="text" value="{{$doctor->is_ban}}"
+                    <!-- <input type="text" value="{{$doctor->is_ban}}"
                     class="form-control @error('is_ban') is-invalid @enderror" name="is_ban"
                         id="phone"
-                        placeholder="Enter date">
+                        placeholder="Enter date"> -->
+                    <select class="form-control" name="is_ban" id="is_ban" placeholder="0" value="{{$doctor->is_ban}}">
+                        <option value="{{$doctor->is_ban}}" >0</option>
+                        <option value="{{$doctor->is_ban}}">1</option>
+                    </select>
                 </div>
 
                 <div class="mb-3">

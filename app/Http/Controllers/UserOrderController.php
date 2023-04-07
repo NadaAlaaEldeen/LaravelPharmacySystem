@@ -13,14 +13,18 @@ class UserOrderController extends Controller
     {
 
         if ($request->ajax()) {
-            $data = Order::select('id', 'status', 'is_insured' , 'total_price' , 'pharmacy_id' , 'user_id')->get();
+            $data = Order::select('id', 'status', 'total_price' ,'user_id', 'pharmacy_id', 'doctor_id')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' .route("orders.edit", $row->id).'" class="btn btn-primary btn-sm mx-2">Edit</a>';
                     $btn .= '<a href="' .route("orders.destroy", $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
                     return $btn;
+                })->addColumn('pharmacy_name',function(Order $order){
+                    return $order->pharmacy->name;
+                })->addColumn('doctor',function(Order $order){
+                    return $order->doctor->name;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action',])
                 ->make(true);
         }
 
