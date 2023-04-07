@@ -9,7 +9,6 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\UserAdressController;
-use App\Http\Middleware\BanMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,15 +19,13 @@ use App\Http\Middleware\BanMiddleware;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('index');
 })->middleware(['auth']);
 
-Route::group(['middleware' => ['auth', 'role:admin'],'BanMiddleware'], function () {
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
-    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/addresses', [UserAdressController::class, 'index'])->name('addresses.index');
     Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
@@ -47,9 +44,9 @@ Route::group(['middleware' => ['auth', 'role:admin'],'BanMiddleware'], function 
 // });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
-Auth::routes(['register' => false]);
+Auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -90,6 +87,9 @@ Route::get('/address/edit/{address}', [UserAdressController::class, 'edit'])->na
 Route::put('/address/{address}',[UserAdressController::class , 'update'])->name('address.update');
 Route::get('/address/delete/{address}', [UserAdressController::class, 'destroy'])->name('address.destroy');
 
-
+//-------------------------------Doctors Routes-------------------
+Route::post('/doctors/{id}/ban',[DoctorController::class, 'ban'])->name('doctors.ban');
+Route::post('/doctors/{id}/unban',[DoctorController::class, 'unban'])->name('doctors.unban');
+Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
 
 

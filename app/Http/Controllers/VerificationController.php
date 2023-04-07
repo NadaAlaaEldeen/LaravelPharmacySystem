@@ -6,10 +6,24 @@ use App\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Http\Request;
 use App\Notifications\greetingNotification;
+use App\Providers\RouteServiceProvider;
 use PhpParser\Node\Expr\Cast\Object_;
+
+
+
+
 
 class VerificationController extends Controller
 {
+    protected $redirectTo=RouteServiceProvider::HOME;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('signed')->only('verified');
+        $this->middleware('throttle:6,1')->only('verified','resend');
+
+    }
     public function verify(Request $request)
     {
         $user = User::findOrFail($request->id);
