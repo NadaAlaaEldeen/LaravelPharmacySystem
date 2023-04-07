@@ -61,7 +61,7 @@ Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.pos
 Route::resource('medicines', MedicineController::class);
 Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 //----------------------------------Doctors Routes----------------------------------------//
-Route::get('/doctor', [App\Http\Controllers\DoctorController::class, 'index'])->name('doctors.index');
+Route::get('/doctor', [DoctorController::class, 'index'])->name('doctors.index');
 Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
 Route::post('/doctors', [DoctorController::class,"store"])->name("doctors.store");
 Route::get('/doctors/{doctor}', [DoctorController::class,'show'])->name('doctors.show');

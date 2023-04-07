@@ -34,10 +34,6 @@
 
                 <div class="form-group">
                     <label for="date-of-birth">is ban</label>
-                    <!-- <input type="text" value="{{$doctor->is_ban}}"
-                    class="form-control @error('is_ban') is-invalid @enderror" name="is_ban"
-                        id="phone"
-                        placeholder="Enter date"> -->
                     <select class="form-control" name="is_ban" id="is_ban" placeholder="0" value="{{$doctor->is_ban}}">
                         <option value="{{$doctor->is_ban}}" >0</option>
                         <option value="{{$doctor->is_ban}}">1</option>
@@ -49,9 +45,6 @@
                     <input type="file" name="avatar" class="form-control" id="exampleFormControlTextarea1" rows="3"  value="{{$doctor->user->avatar}}">
                 </div>
                 </div>
-            </div>
-            </div>
-            </div>
             <div class=" d-flex justify-content-end" style="width: 800px;">
                 <button type="submit" class="btn btn-primary me-5">update</button>
             </div>

@@ -27,8 +27,7 @@
 
                     <div class="shadow border rounded p-5 mb-5">
                         <h2 class="text-primary">More Details</h2>
-                        <p>He lives in Alex.he started to work in {{$doctor->pharmacy->name}} at
-                            <span class="d-block">{{$doctor->user->created_at}}</span>
+                        <p>Work in {{$doctor->pharmacy->name}} pharmacy</p>
 
                     </div>
                     </div>
