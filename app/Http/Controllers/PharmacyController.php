@@ -128,7 +128,6 @@ class PharmacyController extends Controller
 
     public function destroy($pharmacy){
         $pharmacy = Pharmacy::withCount('doctors', 'orders')->where('id', $pharmacy)->first();
-        $user = User::find($pharmacy->owner_user_id);
         if($pharmacy->doctors_count > 0 || $pharmacy->orders_count > 0){
              return redirect()->route('pharmacies.index')->with('fail',' Cannot delete: This pharmacy has transactions');
          }
@@ -136,7 +135,6 @@ class PharmacyController extends Controller
             Storage::disk("public")->delete($pharmacy->avatar);
         }
         $pharmacy->delete();
-        $user->delete();
         return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Deleted Successfully!');
     }
 }

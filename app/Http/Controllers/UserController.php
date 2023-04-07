@@ -113,7 +113,6 @@ class UserController extends Controller
 
 public function destroy($user){
         $client = Client::withCount('orders')->where('id', $user)->first();
-        $user = User::find($client->user_id);
         if($client->orders_count > 0){
              return redirect()->route('users.index')->with('fail',' Cannot delete: This client has transactions');
          }
@@ -121,7 +120,6 @@ public function destroy($user){
             Storage::disk("public")->delete($client->avatar);
         }
         $client->delete();
-        $user->delete();
         return redirect()->route('users.index')->with('success', 'A client is Deleted Successfully!');
     }
 }
