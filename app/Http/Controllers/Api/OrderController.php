@@ -37,8 +37,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())->get();
-        //return OrderResource::collection($orders);
-        return view('Orders/index');
+        return OrderResource::collection($orders);
     }
 
     public function store(Request $request)
@@ -62,15 +61,14 @@ class OrderController extends Controller
             'pharmacy_id' => null,
             'total_price' => 0,
         ]);
-        // foreach ($request->file($prescription) as $image) {
-        $prescription = $request->prescription;
-        $new_name = time() . '.' . $prescription->getClientOriginalExtension();
-        $prescription->move(public_path('images/orders'), $new_name);
-        OrderImage::Create([
-            'order_id' =>  $order->id,
-            'image' => $new_name,
-        ]);
-        // }
+        foreach ($request->file('prescription') as $image) {
+            $new_name = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/orders'), $new_name);
+            OrderImage::Create([
+                'order_id' =>  $order->id,
+                'image' => $new_name,
+            ]);
+        }
         return response()->json(new OrderResource($order), 201);
     }
 
@@ -118,11 +116,10 @@ class OrderController extends Controller
                     File::delete(public_path("images/orders/$order_image->image"));
                     $order_image->delete();
                 }
-                $files = $request->allFiles();
 
-                foreach ($files as $file) {
-                    $new_name = time() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('images/orders'), $new_name);
+                foreach ($request->file('prescription') as $image) {
+                    $new_name = time() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('images/orders'), $new_name);
                     OrderImage::Create([
                         'order_id' =>  $order->id,
                         'image' => $new_name,
