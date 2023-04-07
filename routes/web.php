@@ -10,6 +10,7 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\UserOrderController;
+use App\Http\Controllers\RevenueController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,5 +77,5 @@ Route::post('/order', [UserOrderController::class,'store'])->name("orders.store"
 Route::get('/order/edit/{order}', [UserOrderController::class, 'edit'])->name('orders.edit');
 Route::put('/order/{order}',[UserOrderController::class , 'update'])->name('orders.update');
 Route::get('/order/delete/{order}', [UserOrderController::class, 'destroy'])->name('orders.destroy');
-
-
+//----------------------------------Revenue Routes----------------------------------------//
+Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
