@@ -38,8 +38,8 @@
               </p>
             @endrole
             @endrole
-            
-            
+
+
             </a>
         </li>
       @endrole
@@ -47,7 +47,7 @@
     <!-- doctors menu -->
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{url('doctor')}}" class="nav-link">
             <img src="{{asset("dist/img/images/doctorsicon.png")}}" class="nav-icon">
             <p>
               Doctors
