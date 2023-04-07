@@ -19,6 +19,7 @@ class AreaFactory extends Factory
         return [
             'name' => fake()->city(),
             'address' => fake()->address(),
+            'country_id'=>818
         ];
     }
 }

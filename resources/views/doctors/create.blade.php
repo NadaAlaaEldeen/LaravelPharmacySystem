@@ -68,19 +68,22 @@
                         <option value="female">female</option>
                     </select>
             </div>
-
-            <div class="form-group col-md-6">
-                <label for="exampleInputPhone1">Pharmacy_id</label>
-                <input name="pharmacy_id" type="text" class="form-control" id="exampleFormControlInput1"placeholder="Enter Pharmacy_id">
+            @role('admin')
+            <div class="mb-3 col-md-6">
+                <label for="exampleFormControlTextarea1" class="form-label">Pharmacy_id</label>
+                <select name="pharmacy_id" class="form-control">
+                    @foreach($pharmacies as $pharmacy)
+                            <option value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
+                    @endforeach
+                </select>
             </div>
+            @endrole
         </div>
             <div class="form-group col-md-12">
                 <label>Avatar Image</label>
                 <input class="form-control form-control" id="formFileLg" name="avatar" type="file">
             </div>
 
-
-       </div>
         <div class="d-flex justify-content-center">
             <button class="btn btn-success" type="submit" style="background-color:#6D9886 ; color:white">Submit</button>
         </div>

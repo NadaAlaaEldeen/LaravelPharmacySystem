@@ -15,6 +15,7 @@ class DoctorController extends Controller
     public function index(Request $request)
     {
 
+        
         if ($request->ajax()) {
             $data = Doctor::select('id', 'is_ban', 'user_id', 'pharmacy_id', 'created_at')->get();
             return Datatables::of($data)->addIndexColumn()
@@ -31,7 +32,12 @@ class DoctorController extends Controller
                 ->rawColumns(['action', 'Name', 'pharmacy'])
                 ->make(true);
         }
-
+        if (auth()->user()->hasRole(["pharmacy"])) 
+        {
+            $pharmacy = Pharmacy::where('owner_user_id', auth()->user()->id)->first();
+            $doctors = Doctor::all();
+            return view("doctors/index", ["pharmacy" => $pharmacy],['doctors' => $doctors]);
+        }
         return view('doctors/index');
     }
 
@@ -40,7 +46,8 @@ class DoctorController extends Controller
      public function create()
     {
         $doctor = Doctor::all();
-        return view('doctors.create');
+        $pharmacies = Pharmacy::all();
+        return view('doctors.create', ['pharmacies' => $pharmacies]);
     }
 
     /**
@@ -70,9 +77,17 @@ class DoctorController extends Controller
             }
             $user->avatar= $avatar;
             $user->save();
-
+            if (auth()->user()->hasRole(["pharmacy"])) 
+            { 
+                $pharmacy = Pharmacy::where('owner_user_id', auth()->user()->id)->first();
+                $parmacy_id = $pharmacy->id;
+            }
+            else 
+            {
+                $parmacy_id = $request->input('pharmacy_id');
+            }
         $doctor=new Doctor([
-            'pharmacy_id' => $request->input('pharmacy_id'),
+            'pharmacy_id' => $parmacy_id,
             'is_ban' => $request->input('is_ban'),
             'user_id' => $user->id,
         ]);
