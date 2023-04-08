@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Address;
+use App\Models\Country;
 use App\Http\Requests\StoreAreaRequest;
 use Illuminate\Http\Request;
 use DataTables;
@@ -14,60 +15,44 @@ class AreaController extends Controller
     {
 
         if ($request->ajax()) {
-            $data = Area::select('id', 'name', 'address')->get();
+            $data = Area::select('id','country_id', 'name', 'address')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' .route("areas.edit", $row->id).'" class="btn btn-primary btn-sm mx-2">Edit</a>';
                     $btn .= '<a href="' .route("areas.destroy", $row->id).'" class="btn btn-danger btn-sm">Delete</a>';
                     return $btn;
+                })->addColumn('country',function(Area $area){
+                    return $area->country->capital;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'country'])
                 ->make(true);
         }
 
-        return view('Areas/index');
+        return view('Areas.index');
     }
-
-
 
 
     public function create()
     {
-        return view('areas.create');
+        $countries = Country::all();
+        return view('Areas.create', ['countries' => $countries]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreAreaRequest $request)
     {
         $Medicine= Area::create([
             'name' => $request->name,
             'address' => $request->address,
+            'country_id' => $request->country_id,
         ]);
 
-        return to_route('areas');
+        return redirect()->route('areas.index');
     }
-
-    /**
-     * Display the specified resource.
-     */
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($area){
         $area = Area::find($area);
-        return view('areas.edit', ['area' => $area]);
+        $countries = Country::all();
+        return view('areas.edit', ['area' => $area], ['countries' => $countries]);
     }
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, string $id)
-    // {
-    //     //
-    // }
+    
     public function update(Request $request, $area){
         $area = Area::find($area);
 
@@ -76,28 +61,18 @@ class AreaController extends Controller
                 //column name -> came data of name of input
                 $area->name = $request->name,
                 $area->address = $request->address,
-                $area->created_at = $request->created_at,
-                $area->updated_at= $request->updated_at
+                $area->country_id = $request->country_id,
              ]);
-         return view('areas.index')->with('success', 'A Medicine is Updated Successfully!');
+         return redirect()->route('areas.index')->with('success', 'An Area is Updated Successfully!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-
     public function destroy($area){
-        $area = Area::withCount('addresses')->where('id', $area)->first();
+        $area = Area::withCount('addresses','pharmacies' )->where('id', $area)->first();
         
-        if($area->addresses_count > 0 ){
-            return redirect()->route('areas')->with('success',' Cannot delete: this area has transactions');
+        if($area->addresses_count > 0 || $area->pharmacies_count > 0){
+            return redirect()->route('areas.index')->with('fail',' Cannot delete: This area has transactions');
         }
-        // $area = Area::withCount('pharmacies')->where('id', $area)->first();
-        // if($area->pharmacies_count > 0 ){
-        //     return redirect()->route('areas')->with('success',' Cannot delete: this area');
-        // }
         $area->delete();
-        return redirect()->route('areas');
+        return redirect()->route('areas.index')->with('success', 'An Area is Updated Successfully!');
     }
 }

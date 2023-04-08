@@ -12,6 +12,7 @@ class Pharmacy extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'id',
         'priority',
         'owner_user_id',
         'area_id',
@@ -27,7 +28,7 @@ class Pharmacy extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'owner_user_id');
+        return $this->belongsTo(User::class, 'owner_user_id', "id");
     }
 
     public function type()
@@ -37,7 +38,7 @@ class Pharmacy extends Model
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class, "id");
+        return $this->hasMany(Doctor::class, "pharmacy_id");
     }
 
 

@@ -19,39 +19,42 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-      
+
     <!-- pharmacy menu -->
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
           @role('pharmacy')
-            <a href="{{route('pharmacies.index')}}" class="nav-link">
+          <a href="{{route('pharmacies.index')}}" class="nav-link {{Route::is('pharmacies.show') ? 'active' : '' }}">
+          <img src="{{asset("dist/img/images/pharmacyicon.png")}}" class="nav-icon">
+            <p>
+               Pharmacy
+            </p>
             @else
             @role('admin')
             <a href="{{route('pharmacies.index')}}" class="nav-link">
-            @else
-            <a href="#" class="nav-link">
-            @endrole
-            @endrole
             <img src="{{asset("dist/img/images/pharmacyicon.png")}}" class="nav-icon">
             <p>
-                            @role("admin") Pharmacies @endrole
-                            @role("pharmacy") Pharmacy @endrole
+               Pharmacies
               </p>
+            @endrole
+            @endrole
+
+
             </a>
         </li>
-      @endrole  
+      @endrole
 
     <!-- doctors menu -->
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
-          <a href="{{route('doctors.index')}}" class="nav-link">
+          <a href="{{url('doctor')}}" class="nav-link">
             <img src="{{asset("dist/img/images/doctorsicon.png")}}" class="nav-icon">
             <p>
               Doctors
             </p>
           </a>
         </li>
-        @endrole  
+        @endrole
 
     <!-- menu for admins only -->
         @role('admin')
@@ -95,7 +98,7 @@
 
 
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('orders.index')}}" class="nav-link">
             <img src="{{asset("dist/img/images/ordericon.png")}}" class="nav-icon">
             <p>
               Orders

@@ -15,7 +15,7 @@ class NotifyUsersNotLoggedInForMonth extends Command
      *
      * @var string
      */
-    protected $signature ='notify:users-not-logged-in-for-month';
+    protected $signature = 'notify:users-not-logged-in-for-month';
 
     /**
      * The console command description.
@@ -31,8 +31,9 @@ class NotifyUsersNotLoggedInForMonth extends Command
     {
         $users = User::where('last_login', '<', Carbon::now()->subMonth())->get();
 
-    foreach ($users as $user) {
-        Mail::to($user->email)->send(new UserNotLoggedInNotification());
-    }
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new UserNotLoggedInNotification());
+        }
+        $this->info("Emails sent to " . $users->count() . " users.");
     }
 }

@@ -11,10 +11,11 @@ class OrderImage extends Model
 
     protected $fillable = [
         'image',
-        'order_id',
+        'order_id'
     ];
 
-    public function order() {
+    public function order()
+    {
         return $this->belongsTo(Order::class);
-        }
+    }
 }

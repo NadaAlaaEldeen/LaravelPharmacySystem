@@ -31,7 +31,7 @@
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('pharmacy.restore') }}",
+            ajax: "{{ route('pharmacies.restore') }}",
             columns: [{
                     data: 'id',
                     name: 'id'

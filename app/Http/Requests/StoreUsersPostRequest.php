@@ -28,7 +28,7 @@ class StoreUsersPostRequest extends FormRequest
             'password' => ['required_with:password_confirmation', 'same:password_confirmation'],
             'password_confirmation' => ['required'],
             'birth_day' => ['required'],
-            'avatar' => ['required'],
+            'avatar' => ['required' , 'max:2048', 'mimes:jpeg,jpg,png'],
             'mobile' => ['required', 'min:4'],
             'national_id' => ['required']
 

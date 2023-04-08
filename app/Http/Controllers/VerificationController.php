@@ -35,7 +35,7 @@ class VerificationController extends Controller
         $user->notify(new greetingNotification());
         return (new MailMessage)
             ->greeting('Hello!')
-            ->line('Welcome, your email has verified successufully')
+            ->line('Welcome, your email has verified successfully')
             ->action('Login', url('/login'))
             ->line('Thank you for registering in our application!');
     }

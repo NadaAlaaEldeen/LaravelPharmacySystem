@@ -14,6 +14,12 @@ class PharmacyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'priority' => $this->priority,
+            // 'owner_user_id' => $this->owner_user_id,
+            'area_id' => $this->area_id,
+            'name' => $this->name
+        ];
     }
 }

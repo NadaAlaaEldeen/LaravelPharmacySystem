@@ -181,14 +181,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
-
-        /*
-         * Application Service Providers...
-         */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -196,9 +188,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
 
-        Yajra\DataTables\DataTablesServiceProvider::class,
-
         Cog\Laravel\Ban\Providers\BanServiceProvider::class,
+        Webpatser\Countries\CountriesServiceProvider::class,
     ],
 
     /*
@@ -215,6 +206,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Countries' => Webpatser\Countries\CountriesFacade::class
     ])->toArray(),
 
 ];

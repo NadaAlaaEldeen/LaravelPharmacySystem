@@ -31,6 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'role',
         'national_id',
+        'typeable_type',
+        'typeable_id',
         'gender',
         'birth_day',
         'mobile',
@@ -87,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function pharmacy()
     {
-        return $this->hasOne(Pharmacy::class, "id");
+        return $this->hasOne(Pharmacy::class, 'owner_user_id', "id");
     }
 
     public function typeable()

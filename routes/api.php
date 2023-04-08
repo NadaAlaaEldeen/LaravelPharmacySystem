@@ -41,8 +41,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 
-Route::get('/order/{order}', [OrderController::class, 'show'])->name('orders.show')->middleware('auth:sanctum');
-Route::get('/order', [OrderController::class, 'index'])->name('orders.index')->middleware('auth:sanctum');
+Route::get('order/{order}', [OrderController::class, 'show'])->name('orders.show')->middleware('auth:sanctum');
+Route::get('order', [OrderController::class, 'index'])->name('orders.index')->middleware('auth:sanctum');
+Route::post('order/add-medicine', [OrderController::class, 'putMedicineOrder'])->middleware('auth:sanctum');
+Route::post('order', [OrderController::class, 'store'])->middleware('auth:sanctum');
+Route::post('order/{order}', [OrderController::class, 'update'])->middleware('auth:sanctum');
+Route::put('order/assign/{order}', [OrderController::class, 'assignPharmacyToOrder'])->middleware('auth:sanctum');
+Route::get('order/cost/{order}', [OrderController::class, 'getTotalPrice'])->middleware('auth:sanctum');
+
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/orders', [OrderController::class, 'store']);
 Route::put('/orders/{id}', [OrderController::class, 'update'])->middleware('auth:sanctum');

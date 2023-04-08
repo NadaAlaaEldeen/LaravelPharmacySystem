@@ -2,9 +2,6 @@
 
 @section("content")
 <div class="d-flex justify-content-center">
-    <!-- <div class="col-md-6" style="width: 440px;">
-        <img src="Doctors_For_Men-732x549-thumbnail.jpg" >
-    </div> -->
     <div class="card card-primary shadow border rounded p-4 mb-5 " style="width: 850px;">
         <div class="card-header d-flex justify-content-center">
             <h3 class="card-title">Edit address</h3>
@@ -24,7 +21,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="type">Building_Number</label>
-                    <input type="text" value="{{$address->building_number}}"
+                    <input type="number" value="{{$address->building_number}}"
                            class="form-control @error('type') is-invalid @enderror" name="building_number" id="address"
                            placeholder="Enter Address">
 
@@ -32,42 +29,34 @@
 
                 <div class="form-group col-md-6">
                     <label for="price">Floor_Number</label>
-                    <input type="text" class="form-control @error('created_at') is-invalid @enderror" name="floor_number"
+                    <input type="number" class="form-control @error('created_at') is-invalid @enderror" name="floor_number"
                            id="created_at" value="{{$address->floor_number}}"
                            placeholder="Enter created date">
 
                 </div>
-
                 <div class="form-group col-md-6">
-                    <label for="price">Is_Main</label>
-                    <input type="text" class="form-control @error('created_at') is-invalid @enderror" name="is_main"
-                           id="created_at" value="{{$address->is_main}}"
-                           placeholder="Enter created date">
-
-                </div>
-
-                <div class="form-group">
                     <label for="phone">Flat_Number</label>
-                    <input type="text" value="{{$address->flat_number}}"
+                    <input type="number" value="{{$address->flat_number}}"
                            class="form-control @error('updated_at') is-invalid @enderror" name="flat_number" id="updated_at"
                            placeholder="Enter updated date">
-
                 </div>
-                <div class="form-group">
-                    <label for="phone">Area_id</label>
-                    <input type="text" value="{{$address->area_id}}"
-                           class="form-control @error('updated_at') is-invalid @enderror" name="area_id" id="updated_at"
-                           placeholder="Enter updated date">
-
+                <div class="form-group col-md-6">
+                <label for="price">Is_Main:</label><br>
+                    <input type="radio"  name="is_main" value="0">
+                    <label for="age1">No</label><br>
+                    <input type="radio" name="is_main" value="1">
+                    <label for="age2">Yes</label><br> 
                 </div>
-
+                
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Area_ID</label>
+                    <select name="area_id" class="form-control">
+                        <option value="{{$address->area_id}}">{{$address->area_id}}</option>
+                        @foreach($areas as $area)
+                            <option value="{{$area->id}}">{{$area->id}}</option>
+                        @endforeach
+                    </select>
                 </div>
-
-                    </div>
-
-                </div>
-
-
             </div>
             <br>
             <!-- /.card-body -->

@@ -22,9 +22,17 @@ class StorePharmacyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'priority' => ["required","numeric", "min:0"],
-            'owner_user_id' => ["required","numeric", "min:0"],
-            'area_id' => ["required","numeric", "min:0"],
+            'name' => ["required", "max:255"],
+            'email' => ["required", "max:255", "unique:users,email"],
+            'password' => ["required", "max:255", "min:6"],
+            'national_id' => ["required", "max:14", "unique:users,national_id"],
+            'avatar' => ["nullable", "mimes:jpg,png"],
+            'gender' => ["required"],
+            'mobile' => ["required", "digits:11"],
+            'date_of_birth' => ["required", "date"],
+            'name' => ["required", "max:255"],
+            'area_id' => ["required"],
+            'priority' => ["required","min:1"]
         ];
     }
 }

@@ -14,6 +14,8 @@ class Doctor extends Model
         'id',
         'is_ban',
         'created_at',
+        'user_id',
+        'pharmacy_id'
     ];
 
     public function type()
