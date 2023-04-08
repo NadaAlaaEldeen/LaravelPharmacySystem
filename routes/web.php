@@ -10,6 +10,7 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\UserAdressController;
 use App\Http\Controllers\UserOrderController;
+use App\Http\Controllers\RevenueController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,8 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     Route::get('/pharmacies/create', [PharmacyController::class, 'create'])->name('pharmacies.create');
+    Route::get('/pharmacies/restore', [PharmacyController::class, 'restore'])->name('pharmacies.restore');
+    Route::put('/pharmacies/restore/{id}', [PharmacyController::class, 'restoreOne'])->name('pharmacies.restoreOne');
     Route::post('/pharmacies', [PharmacyController::class,"store"])->name("pharmacies.store");
     Route::get('/pharmacies/delete/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
 
@@ -47,10 +50,10 @@ Route::group(["middleware" => ['role:admin|pharmacy']], function () {
     Route::get('/pharmacies/{pharmacy}', [PharmacyController::class,'show'])->name('pharmacies.show');
     Route::get('/pharmacies/edit/{pharmacy}', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
     Route::put('/pharmacies/{pharmacy}',[PharmacyController::class , 'update'])->name('pharmacies.update');
+
 });
 // ------------------------------------------------------------------------------------------
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'client']);
 Auth::routes(['register' => false]);
 
 
@@ -64,6 +67,8 @@ Route::get('/medicines/delete/{medicine}', [MedicineController::class, 'destroy'
 Route::get('/doctor', [DoctorController::class, 'index'])->name('doctors.index');
 Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
 Route::post('/doctors', [DoctorController::class,"store"])->name("doctors.store");
+Route::post('/doctors/{id}/ban',[DoctorController::class, 'ban'])->name('doctors.ban');
+Route::post('/doctors/{id}/unban',[DoctorController::class, 'unban'])->name('doctors.unban');
 Route::get('/doctors/{doctor}', [DoctorController::class,'show'])->name('doctors.show');
 Route::get('/doctors/edit/{doctor}', [DoctorController::class, 'edit'])->name('doctors.edit');
 Route::put('/doctors/{doctor}',[DoctorController::class , 'update'])->name('doctors.update');
@@ -76,5 +81,8 @@ Route::post('/order', [UserOrderController::class,'store'])->name("orders.store"
 Route::get('/order/edit/{order}', [UserOrderController::class, 'edit'])->name('orders.edit');
 Route::put('/order/{order}',[UserOrderController::class , 'update'])->name('orders.update');
 Route::get('/order/delete/{order}', [UserOrderController::class, 'destroy'])->name('orders.destroy');
-
+//----------------------------------Revenue Routes----------------------------------------//
+Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
+//------------------------------Users Routes----------------------
+Route::get('/users/status/{id}/{status_code}',[UserController::class ,'updateStatus'])->name('users.status.update');
 

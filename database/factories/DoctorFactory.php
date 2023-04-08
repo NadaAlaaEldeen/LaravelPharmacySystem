@@ -21,10 +21,6 @@ class DoctorFactory extends Factory
 
         $users = User::all();
         return [
-            'area_id' => fake()->numberBetween($min = 2, $max = 5),
-            'owner_user_id' => $this->faker->unique()->numberBetween(1, $users->count()),
-            'priority' => fake()->unique()->numberBetween($min = 1, $max = 5),
-            'name' => fake()->name(),
             'pharmacy_id' => fake()->numberBetween($min = 2, $max = 5),
             'user_id' => fake()->numberBetween($min = 2, $max = 10),
             'is_ban' => fake()->boolean

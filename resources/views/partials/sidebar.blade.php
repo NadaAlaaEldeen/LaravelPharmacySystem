@@ -109,7 +109,7 @@
       <!-- Revenue menu -->
       @hasanyrole("pharmacy|admin")
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{route('revenues.index')}}" class="nav-link">
             <img src="{{asset("dist/img/images/revenueicon.png")}}" class="nav-icon">
             <p>
               Revenue

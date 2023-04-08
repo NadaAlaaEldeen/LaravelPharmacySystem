@@ -37,7 +37,7 @@ class PharmacyController extends Controller
     if (auth()->user()->hasRole(["pharmacy"])) 
         {
             $pharmacy = Pharmacy::where('owner_user_id', auth()->user()->id)->first();
-            return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+            return view("pharmacies.show", ["pharmacy" => $pharmacy]);
         }
     }
 
@@ -125,7 +125,6 @@ class PharmacyController extends Controller
              
         return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Updated Successfully!');
     }
-
     public function destroy($pharmacy){
         $pharmacy = Pharmacy::withCount('doctors', 'orders')->where('id', $pharmacy)->first();
         if($pharmacy->doctors_count > 0 || $pharmacy->orders_count > 0){
@@ -137,5 +136,44 @@ class PharmacyController extends Controller
         $pharmacy->delete();
         return redirect()->route('pharmacies.index')->with('success', 'A Pharmacy is Deleted Successfully!');
     }
+      
+    public function restoreOne($id){
+        $item = Pharmacy::withTrashed()->find($id);
+        $item->restore();
+        return view('Pharmacy/index');
+       
+    }
+
+    public function restore(Request $req)
+    {
+
+        if ($req->ajax()) {
+            $deleted = Pharmacy::onlyTrashed('deleted_at')->get();
+            return Datatables::of($deleted)->addIndexColumn()
+                ->addColumn('action', function ($result) {
+                    // return '<a href="' . route('pharmacy.restoreOne', $result->id) .'" class="btn btn-primary btn-sm mx-2">restore</a>';
+                    $form = '
+                    <form action="' . route('pharmacies.restoreOne', $result->id) .'" method="POST">
+                        ' . csrf_field() . '
+                        <input type="hidden" name="_method" value="PUT">
+                        <button type="submit" class="btn btn-primary btn-sm mx-2">Restore</button>
+                    </form>
+                ';
+                    return $form;
+
+                })->addColumn('Name',function(Pharmacy $pharmacy){
+                    return $pharmacy->user->name;
+                })->addColumn('area',function(Pharmacy $pharmacy){
+                    return $pharmacy->area->name;
+                })
+                ->rawColumns(['action', 'Name'])
+                ->make(true);
+        }
+
+        return view('Pharmacy/restore');
+          }
+
+
+
 }
 

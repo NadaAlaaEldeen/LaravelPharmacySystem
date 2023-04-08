@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Console\Commands\UserNotLoggedInNotification;
+use App\Mail\UserNotLoggedInNotification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -34,5 +34,6 @@ class NotifyUsersNotLoggedInForMonth extends Command
         foreach ($users as $user) {
             Mail::to($user->email)->send(new UserNotLoggedInNotification());
         }
+        $this->info("Emails sent to " . $users->count() . " users.");
     }
 }
