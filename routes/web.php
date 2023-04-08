@@ -48,6 +48,7 @@ Route::group(["middleware" => ['role:admin|pharmacy']], function () {
     Route::get('/pharmacies/{pharmacy}', [PharmacyController::class,'show'])->name('pharmacies.show');
     Route::get('/pharmacies/edit/{pharmacy}', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
     Route::put('/pharmacies/{pharmacy}',[PharmacyController::class , 'update'])->name('pharmacies.update');
+
 });
 // ------------------------------------------------------------------------------------------
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

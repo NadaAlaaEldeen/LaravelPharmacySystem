@@ -10,10 +10,9 @@
             <table class="table table-bordered user_datatable">
                 <thead>
                     <tr>
-                    <th>ID</th>
-                        <th>Pharmacy Avatar</th>
+
                         <th>Pharmacy Name</th>
-                        <th>Total Order</th>
+                        <th>Total Orders</th>
                         <th>Total Revenue</th>
                     </tr>
                 </thead>
@@ -30,28 +29,19 @@
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('medicines.index') }}",
-            columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
+            ajax: "{{ route('revenues.index') }}",
+            columns: [
                 {
                     data: 'name',
                     name: 'name'
                 },
                 {
-                    data: 'type',
-                    name: 'type'
+                    data: 'total_order',
+                    name: 'total_order'
                 },
                 {
-                    data: 'price',
-                    name: 'price'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
+                    data: 'total_revenue',
+                    name: 'total_revenue',
                 },
             ]
         });
