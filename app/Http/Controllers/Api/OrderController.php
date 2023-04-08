@@ -95,15 +95,13 @@ class OrderController extends Controller
             'total_price' => $total_price,
         ]);
 
-        return response()->json('Medicine added to the order');
+        return response()->json('Medicine added to this order');
     }
     public function getTotalPrice($id)
     {
         $order = Order::find($id);
-        return response()->json('Your order total price' . $order->total_price);
+        return response()->json('Your order total price ' . $order->total_price);
     }
-
-
 
     public function update($id, Request $request)
     {
@@ -132,7 +130,7 @@ class OrderController extends Controller
                 'is_insured' => $request->is_insured,
             ]);
 
-            return response()->json('updated');
+            return response()->json(new OrderResource($order), 201);
         }
         return response()->json('can\'t update this order');
     }
@@ -156,7 +154,7 @@ class OrderController extends Controller
                 'pharmacy_id' => $pharmacy->id
             ]);
 
-            return response()->json('Assign successfully to pharmacy' . $pharmacy->name);
+            return response()->json('Assign successfully to pharmacy ' . $pharmacy->name);
         }
         return response()->json("Can't find pharmacy in this area");
     }

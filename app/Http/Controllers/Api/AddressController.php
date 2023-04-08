@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
-     public function index()
+    public function index()
     {
         // $user = User::find(1);
         // Auth::login($user);
@@ -71,7 +71,12 @@ class AddressController extends Controller
     public function destroy($id)
     {
         $address = Address::find($id);
-        $address->delete();
-        return response()->json('deleted successfully');
+
+        if ($address) {
+            $address->delete();
+            return response()->json('deleted successfully');
+        }
+        return response()->json('This addresss NOT found');
+
     }
 }

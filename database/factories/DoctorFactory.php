@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+
 use App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,14 +19,15 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
 
-            $users = User::all();
-            return [
-                'area_id' => fake()->numberBetween($min = 2, $max = 5),
-                'owner_user_id' => $this->faker->unique()->numberBetween(1, $users->count()),
-                'priority' => fake()->unique()->numberBetween($min = 1, $max = 5),
-                'name' => fake()->name()
-            ];
-
+        $users = User::all();
+        return [
+            'area_id' => fake()->numberBetween($min = 2, $max = 5),
+            'owner_user_id' => $this->faker->unique()->numberBetween(1, $users->count()),
+            'priority' => fake()->unique()->numberBetween($min = 1, $max = 5),
+            'name' => fake()->name(),
+            'pharmacy_id' => fake()->numberBetween($min = 2, $max = 5),
+            'user_id' => fake()->numberBetween($min = 2, $max = 10),
+            'is_ban' => fake()->boolean
+        ];
     }
-
 }

@@ -69,7 +69,7 @@ class ClientController extends Controller
         $user->mobile = request()->mobile;
         $user->national_id = request()->national_id;
 
-        // $new_name = time() . '.' . $request()->avatar->getClientOriginalExtension();
+        // $new_name = time() . '.' . request()->avatar->getClientOriginalExtension();
         // $request()->avatar->move(public_path('images/clients'), $new_name);
 
         $client = Client::where('user_id', $user->id)->first();
