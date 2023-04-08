@@ -37,8 +37,14 @@
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
+<<<<<<< HEAD:resources/views/Doctor/index.blade.php
+            ajax: "{{ route('doctors.index') }}",
+            columns: [
+                {
+=======
             ajax: "{{ route('orders.index') }}",
             columns: [{
+>>>>>>> a8cbc573ddfd54b19952284afcc01b4265e50409:resources/views/orders/index.blade.php
                     data: 'id',
                     name: 'id'
                 },
@@ -51,8 +57,16 @@
                     name: 'total_price'
                 },
                 {
+<<<<<<< HEAD:resources/views/Doctor/index.blade.php
+                    data: 'created_at',
+                    name: 'created_at',
+                    render: function(data, type, full, meta) {
+                        return moment(data).format('YYYY-MM-DD');
+                    }
+=======
                     data: 'doctor',
                     name: 'doctor'
+>>>>>>> a8cbc573ddfd54b19952284afcc01b4265e50409:resources/views/orders/index.blade.php
                 },
                 {
                     data: 'pharmacy_name',
@@ -69,4 +83,9 @@
     });
 </script>
 
+<<<<<<< HEAD:resources/views/Doctor/index.blade.php
+
 @endsection
+=======
+@endsection
+>>>>>>> a8cbc573ddfd54b19952284afcc01b4265e50409:resources/views/orders/index.blade.php

@@ -187,7 +187,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Yajra\DataTables\DataTablesServiceProvider::class,
+
+        Cog\Laravel\Ban\Providers\BanServiceProvider::class,
         Webpatser\Countries\CountriesServiceProvider::class,
     ],
 

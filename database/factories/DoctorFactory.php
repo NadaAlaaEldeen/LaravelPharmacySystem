@@ -18,12 +18,19 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
 
+<<<<<<< HEAD
 
             return [
 
                 'pharmacy_id' => fake()->numberBetween($min = 2, $max = 5),
                 'user_id' => fake()->numberBetween($min = 2, $max = 10),
                 'is_ban' => fake()->boolean
+=======
+            return [
+                'pharmacy_id' => fake()->numberBetween($min = 2, $max = 5),
+                'user_id' => fake()->numberBetween($min = 2, $max = 10),
+                'is_ban' => fake()->boolean,
+>>>>>>> 755bfebc975a47121791728c7f7358b4efd95707
             ];
 
     }

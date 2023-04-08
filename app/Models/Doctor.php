@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cog\Laravel\Ban\Traits\Bannable;
+use Cog\Laravel\Ban\Services\BanService;
 
-class Doctor extends Model
+class Doctor extends Model 
 {
-    use HasFactory;
-
+    use HasFactory, Bannable;
     protected $fillable = [
         'id',
         'is_ban',
